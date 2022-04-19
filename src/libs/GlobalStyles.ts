@@ -61,6 +61,7 @@ html{
 
 body{
   background-color: #fafafa;
+  height: 100%;
   min-height: 100vh;
   margin: 0;
   font-family: Roboto, sans-serif;
@@ -68,6 +69,10 @@ body{
   font-weight: 400;
   color: #6A7B97;
   overflow-x: hidden;
+}
+
+#root{
+  height: 100%;
 }
 `;
 

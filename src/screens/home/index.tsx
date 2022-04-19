@@ -7,6 +7,7 @@ const HomeScreen = () => {
     <Main>
       Home Screen
       <img src={sampleImg} />
+      <div className="slider-wrap"></div>
     </Main>
   );
 };
