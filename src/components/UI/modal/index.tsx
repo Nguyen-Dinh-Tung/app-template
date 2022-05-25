@@ -5,6 +5,11 @@ const modalRoot: any = document.getElementById("modal-root");
 const htmlElement: any = document.querySelector("html");
 let isHtmlScroll = true;
 
+interface Props {
+  isOpen: boolean;
+  close: () => void;
+}
+
 export const Modal = (props: any) => {
   useEffect(() => {
     // prevent html scroll when modal is open
@@ -19,7 +24,13 @@ export const Modal = (props: any) => {
   }, [props.isOpen]);
   if (!props.isOpen) return null;
   return ReactDOM.createPortal(
-    <Wrapper {...props}>
+    <Wrapper
+      {...props}
+      onClick={() => {
+        props.close();
+        props.onClick && props.onClick();
+      }}
+    >
       <div>
         <div onClick={(e: any) => e.stopPropagation()}>{props.children}</div>
       </div>
@@ -47,9 +58,9 @@ const Wrapper = styled.div`
     background: rgba(0, 0, 0, 0.7);
     > div {
       background: white;
-      min-width: 100px;
-      min-height: 100px;
-      border-radius: 8px;
+      min-width: 200px;
+      min-height: 200px;
+      border-radius: 4px;
     }
   }
 `;

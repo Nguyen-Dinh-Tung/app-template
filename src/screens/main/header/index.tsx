@@ -1,6 +1,6 @@
 import { Container } from "components/layout";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const Header = () => {
@@ -8,9 +8,9 @@ const Header = () => {
     <Styles>
       <Container>
         <div className="header">
-          <Link to="/">
+          <NavLink to="/">
             <div>Home</div>
-          </Link>
+          </NavLink>
         </div>
       </Container>
     </Styles>
@@ -30,5 +30,9 @@ const Styles = styled.div`
     height: 80px;
     display: flex;
     align-items: center;
+  }
+
+  .active {
+    color: orange;
   }
 `;
