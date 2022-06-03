@@ -6,7 +6,7 @@ interface Props {
   children?: any;
 }
 
-export default ({ items, children, ...props }: any) => {
+export const List = ({ items, children, ...props }: any) => {
   return (
     <Wrapper {...props}>
       {items.map(
