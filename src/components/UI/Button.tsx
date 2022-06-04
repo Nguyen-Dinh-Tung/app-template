@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const Button = styled.button`
+export const Button = styled.button<any>`
   border: unset;
+  font-family: Roboto;
   height: 40px;
   min-width: 100px;
   font-size: 16px;
@@ -18,4 +19,12 @@ export const Button = styled.button`
   :hover {
     box-shadow: ${({ theme }: any) => theme.shadow_level_2};
   }
+
+  ${({ outline, theme }: any) =>
+    outline &&
+    css`
+      color: ${theme.primary};
+      background: unset;
+      border: 1px solid ${theme.primary};
+    `}
 `;

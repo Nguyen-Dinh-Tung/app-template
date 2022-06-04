@@ -2,8 +2,25 @@ import React from "react";
 import styled from "styled-components";
 // import downArrow from "assets/images/down-arrow.png";
 
-export const Select = (props: any) => {
-  return <Wrapper {...props}>{props.children}</Wrapper>;
+interface Props {
+  options: any[];
+}
+
+export const Select = ({ options, ...props }: any) => {
+  return (
+    <Wrapper className="select-wrap" {...props}>
+      {options.map((item: any, ind: number) => {
+        return (
+          <option
+            key={ind}
+            value={item.value !== undefined ? item.value : item}
+          >
+            {item.label || item}
+          </option>
+        );
+      })}
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.select`
