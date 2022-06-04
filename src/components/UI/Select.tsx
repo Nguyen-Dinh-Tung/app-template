@@ -3,7 +3,7 @@ import styled from "styled-components";
 // import downArrow from "assets/images/down-arrow.png";
 
 interface Props {
-  options: any[];
+  options: any[]; //[{label:'Thứ 2', value:'2'}] or [1,2,3,4,5]
 }
 
 export const Select = ({ options, ...props }: any) => {

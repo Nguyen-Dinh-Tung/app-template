@@ -28,7 +28,19 @@ export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: Roboto;
   src: url(${robotoBold700});
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url(${robotoBold700});
   font-weight: 700;
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url(${robotoBlack900});
+  font-weight: 800;
 }
 
 @font-face {
