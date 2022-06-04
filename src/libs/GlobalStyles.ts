@@ -1,41 +1,40 @@
 import { createGlobalStyle } from "styled-components";
-import robotoRegular from "assets/font/Roboto-Regular.ttf";
-import ralewayExtraBold from "assets/font/Raleway-ExtraBold.ttf";
-import robotoExtraBold from "assets/font/Roboto-Black.ttf";
-import robotoMedium from "assets/font/Roboto-Medium.ttf";
-import robotoBold from "assets/font/Roboto-Bold.ttf";
+import robotoLight300 from "assets/font/Roboto-Light.ttf";
+import robotoRegular400 from "assets/font/Roboto-Regular.ttf";
+import robotoMedium500 from "assets/font/Roboto-Medium.ttf";
+import robotoBold700 from "assets/font/Roboto-Bold.ttf";
+import robotoBlack900 from "assets/font/Roboto-Black.ttf";
 
 export const GlobalStyle = createGlobalStyle`
 
 @font-face {
   font-family: Roboto;
-  src: url(${robotoExtraBold});
-  font-weight: 800;
+  src: url(${robotoLight300});
+  font-weight: 300;
 }
 
 @font-face {
   font-family: Roboto;
-  src: url(${robotoBold});
-  font-weight: 600;
+  src: url(${robotoRegular400});
+  font-weight: 400;
 }
 
 @font-face {
   font-family: Roboto;
-  src: url(${robotoMedium});
+  src: url(${robotoMedium500});
   font-weight: 500;
 }
 
 @font-face {
   font-family: Roboto;
-  src: url(${robotoRegular});
-  font-weight: 400;
+  src: url(${robotoBold700});
+  font-weight: 700;
 }
 
-
 @font-face {
-  font-family: Raleway;
-  src: url(${ralewayExtraBold});
-  font-weight: 800;
+  font-family: Roboto;
+  src: url(${robotoBlack900});
+  font-weight: 900;
 }
 
 *{
@@ -103,4 +102,6 @@ export const theme = {
   shadow_level_3: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
   shadow_level_4: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
   shadow_level_5: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
+  blue: "#2F6BFF",
+  green: "#00BC3C",
 };

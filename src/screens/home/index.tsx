@@ -1,4 +1,5 @@
 import { Button } from "components/UI/Button";
+import { List } from "components/UI/List";
 import { SlickSlider } from "components/UI/SlickSlider";
 import React from "react";
 import Main from "screens/main";
@@ -17,6 +18,13 @@ const HomeScreen = () => {
           );
         }}
       </SlickSlider>
+      <List items={[300, 400, 500, 600, 700, 800, 900]}>
+        {(item: any) => {
+          return (
+            <p style={{ fontWeight: item, fontSize: "24px" }}>ROBOTO {item}</p>
+          );
+        }}
+      </List>
     </Main>
   );
 };

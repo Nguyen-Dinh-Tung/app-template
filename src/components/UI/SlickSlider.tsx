@@ -70,14 +70,10 @@ const Styles = styled.div`
   display: block;
   position: relative;
 
-  .slide-wrapp {
-    background: blue;
-    border: 1px solid;
-  }
-
-  .slide-item {
-    background: red;
-    margin: 0 auto;
-    width: 50px;
+  .slick-arrow {
+    ::before,
+    ::after {
+      color: #0112227f;
+    }
   }
 `;
