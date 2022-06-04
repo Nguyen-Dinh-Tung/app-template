@@ -18,7 +18,8 @@ export const Input = styled.input<any>`
     outline: none;
   }
   ::-webkit-calendar-picker-indicator {
-    opacity: 0;
     cursor: pointer;
+    padding-right: 5px;
+    opacity: 0.7;
   }
 `;

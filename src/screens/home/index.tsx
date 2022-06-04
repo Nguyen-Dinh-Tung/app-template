@@ -1,4 +1,5 @@
 import { Button } from "components/UI/Button";
+import { Input } from "components/UI/Input";
 import { List } from "components/UI/List";
 import { Select } from "components/UI/Select";
 import { SlickSlider } from "components/UI/SlickSlider";
@@ -12,6 +13,7 @@ const HomeScreen = () => {
       <Button>Button</Button>
       <Button outline>Outline button</Button>
       <Select options={[1, 2, 3, 4, 5]} />
+      <Input type="date" />
       <SlickSlider items={Array(10).fill("")}>
         {(item: any, ind: number) => {
           return (
