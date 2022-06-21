@@ -1,14 +1,12 @@
 import React from "react";
-import { ThemeProvider } from "styled-components";
-import { GlobalStyle, theme } from "./libs/GlobalStyles";
 import ScreenRouter from "./screens";
+import AppProvider from "store";
 
 export const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
+    <AppProvider>
       <ScreenRouter />
-    </ThemeProvider>
+    </AppProvider>
   );
 };
 

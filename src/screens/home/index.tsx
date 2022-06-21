@@ -5,11 +5,13 @@ import { Select } from "components/UI/Select";
 import { SlickSlider } from "components/UI/SlickSlider";
 import React from "react";
 import Main from "screens/main";
+import { CounterSection } from "./Counter";
 
 const HomeScreen = () => {
   return (
     <Main>
       Home Screen
+      <CounterSection />
       <Button>Button</Button>
       <Button outline>Outline button</Button>
       <Select options={[1, 2, 3, 4, 5]} />
