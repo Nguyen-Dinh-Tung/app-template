@@ -1,17 +1,23 @@
 import { Button } from "components/UI/Button";
+import { DatePicker } from "components/UI/date-picker";
 import { Input } from "components/UI/Input";
 import { List } from "components/UI/List";
+import { ReactSelect } from "components/UI/ReactSelect";
 import { Select } from "components/UI/Select";
 import { SlickSlider } from "components/UI/SlickSlider";
-import React from "react";
+import React, { useState } from "react";
 import Main from "screens/main";
 import { CounterSection } from "./Counter";
 
 const HomeScreen = () => {
+  const [date, setDate] = useState<any>(new Date());
   return (
     <Main>
       Home Screen
-      <CounterSection />
+      {/* <CounterSection /> */}
+      <Select type="time" />
+      <ReactSelect label="Date time" type="time" isMulti isSearchable />
+      <DatePicker value={date} onChange={(date: string) => setDate(date)} />
       <Button>Button</Button>
       <Button outline>Outline button</Button>
       <Select options={[1, 2, 3, 4, 5]} />
