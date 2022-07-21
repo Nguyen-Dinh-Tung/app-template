@@ -1,8 +1,7 @@
 import React from "react";
-import Main from "screens/main";
 
 const HistoryScreen = () => {
-  return <Main>History Screen</Main>;
+  return <>History Screen</>;
 };
 
 export default HistoryScreen;

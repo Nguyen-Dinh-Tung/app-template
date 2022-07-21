@@ -6,13 +6,13 @@ import { ReactSelect } from "components/UI/ReactSelect";
 import { Select } from "components/UI/Select";
 import { SlickSlider } from "components/UI/SlickSlider";
 import React, { useState } from "react";
-import Main from "screens/main";
+import styled from "styled-components";
 import { CounterSection } from "./Counter";
 
 const HomeScreen = () => {
   const [date, setDate] = useState<any>(new Date());
   return (
-    <Main>
+    <Styles>
       Home Screen
       {/* <CounterSection /> */}
       <Select type="time" />
@@ -38,8 +38,10 @@ const HomeScreen = () => {
           );
         }}
       </List>
-    </Main>
+    </Styles>
   );
 };
 
 export default HomeScreen;
+
+const Styles = styled.div``;
