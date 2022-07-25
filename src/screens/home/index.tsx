@@ -1,26 +1,60 @@
+import { DatePicker, Select, TimePicker } from "antd";
 import { Button } from "components/UI/Button";
-import { DatePicker } from "components/UI/date-picker";
+// import { DatePicker } from "components/UI/date-picker";
 import { Input } from "components/UI/Input";
 import { List } from "components/UI/List";
 import { ReactSelect } from "components/UI/ReactSelect";
-import { Select } from "components/UI/Select";
+// import { Select } from "components/UI/Select";
 import { SlickSlider } from "components/UI/SlickSlider";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { CounterSection } from "./Counter";
+import "antd/dist/antd.css";
 
 const HomeScreen = () => {
   const [date, setDate] = useState<any>("");
+  const [selecteds, setSlected] = useState([]);
   return (
     <Styles>
       Home Screen
+      <div>Ant Design</div>
+      <Select
+        options={Array(100)
+          .fill("")
+          .map((item: any, ind: number) => ({
+            label: "Label " + ind,
+            value: "value" + ind,
+          }))}
+        value={selecteds}
+        suffixIcon={<div>A</div>}
+        onChange={(e: any) => {
+          console.log("aaaaaaonChange", e);
+          setSlected(e);
+        }}
+        mode="multiple"
+        showSearch
+      />
+      <DatePicker
+        format={"DD/MM/YYYY HH:mm"}
+        suffixIcon="A"
+        showTime
+        onChange={(e: any) => {
+          console.log("aaaaaaonChange", e);
+        }}
+      />
+      <TimePicker
+        suffixIcon="A"
+        onChange={(e: any) => {
+          console.log("aaaaaaonChange", e);
+        }}
+      />
       <CounterSection />
-      <Select type="time" />
+      {/* <Select type="time" /> */}
       <ReactSelect label="Date time" type="time" isMulti isSearchable />
-      <DatePicker value={date} onChange={(date: string) => setDate(date)} />
+      {/* <DatePicker value={date} onChange={(date: string) => setDate(date)} /> */}
       <Button>Button</Button>
       <Button outline>Outline button</Button>
-      <Select options={[1, 2, 3, 4, 5]} />
+      {/* <Select options={[1, 2, 3, 4, 5]} /> */}
       <Input type="date" />
       <SlickSlider items={Array(10).fill("")}>
         {(item: any, ind: number) => {
