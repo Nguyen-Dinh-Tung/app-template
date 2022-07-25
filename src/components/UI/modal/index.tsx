@@ -21,6 +21,13 @@ export const Modal = (props: any) => {
       htmlElement.style.overflow = "auto";
       isHtmlScroll = true;
     }
+
+    return () => {
+      if (!isHtmlScroll) {
+        htmlElement.style.overflow = "auto";
+        isHtmlScroll = true;
+      }
+    };
   }, [props.isOpen]);
   if (!props.isOpen) return null;
   return ReactDOM.createPortal(

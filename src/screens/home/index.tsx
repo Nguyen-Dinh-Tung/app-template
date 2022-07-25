@@ -10,11 +10,11 @@ import styled from "styled-components";
 import { CounterSection } from "./Counter";
 
 const HomeScreen = () => {
-  const [date, setDate] = useState<any>(new Date());
+  const [date, setDate] = useState<any>("");
   return (
     <Styles>
       Home Screen
-      {/* <CounterSection /> */}
+      <CounterSection />
       <Select type="time" />
       <ReactSelect label="Date time" type="time" isMulti isSearchable />
       <DatePicker value={date} onChange={(date: string) => setDate(date)} />

@@ -72,7 +72,6 @@ export const Calendar = ({ day, month, year, onChange, close }: any) => {
 
   const popupRef = useRef(null);
   useClickOutSide(popupRef, () => {
-    console.log("click outsideeeeee");
     close();
   });
 
@@ -130,26 +129,28 @@ export const Calendar = ({ day, month, year, onChange, close }: any) => {
         ))}
       </div>
       <div className="calendar-content">
-        {dayInMonth.map((d: any, ind: number) => (
-          <div
-            className={
-              "day-item" +
-              (day == d.day && d.month == month && d.year == year
-                ? " selected"
-                : "") +
-              (selectedMonth != d.month ? " other-month" : "")
-            }
-            key={ind}
-            onClick={() => {
-              const temp = `${d.year}-${configDay(d.month + 1)}-${configDay(
-                d.day
-              )}`;
-              onChange(temp);
-            }}
-          >
-            {d.day}
-          </div>
-        ))}
+        {dayInMonth.map((d: any, ind: number) => {
+          const isSelectedDay =
+            d.day == day && d.month == month && d.year == year;
+          return (
+            <div
+              className={
+                "day-item" +
+                (isSelectedDay ? " selected" : "") +
+                (selectedMonth != d.month ? " other-month" : "")
+              }
+              key={ind}
+              onClick={() => {
+                const temp = `${d.year}-${configDay(d.month + 1)}-${configDay(
+                  d.day
+                )}`;
+                onChange(temp);
+              }}
+            >
+              {d.day}
+            </div>
+          );
+        })}
       </div>
     </Styles>
   );
@@ -170,6 +171,10 @@ const Styles = styled.div`
   .calendar-top {
     display: flex;
     padding-bottom: 16px;
+
+    .calendar-year {
+      min-width: 56px;
+    }
 
     .top-right {
       display: flex;

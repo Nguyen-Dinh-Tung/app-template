@@ -1,25 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as CalendarIcon } from "assets/svg/calendar.svg";
 import { Calendar } from "./Calendar";
+import moment from "moment";
 
 const configDay = (day: number) => (day > 9 ? day : "0" + day);
+const formatStr = "DD/MM/YYYY";
 
 export const DatePicker = ({ value, onChange }: any) => {
-  const date = value ? new Date(value) : new Date();
-  const selectedDate = date.getDate();
-  const month = date.getMonth();
-  const year = date.getFullYear();
+  const [selectedDate, setSelectedDate] = useState(0);
+  const [month, setMonth] = useState(0);
+  const [year, setYear] = useState(0);
+  const [inputValue, setInputValue] = useState("");
 
   const [isOpen, setOpen] = useState(true);
+  useEffect(() => {
+    if (value) {
+      const date = new Date(value);
+      const selectedDate = date.getDate();
+      const month = date.getMonth();
+      const year = date.getFullYear();
+      setSelectedDate(selectedDate);
+      setMonth(month);
+      setYear(year);
+      const temp = `${configDay(selectedDate)}/${configDay(month + 1)}/${year}`;
+      setInputValue(temp);
+    } else setInputValue("");
+  }, [value]);
   return (
     <Styles>
       <input
-        value={`${configDay(selectedDate)}/${configDay(month + 1)}/${year}`}
-        placeholder="dd/mm/yyyy"
-        readOnly
+        value={inputValue}
+        placeholder={formatStr.toLowerCase()}
         onClick={(e: any) => {
           setOpen(!isOpen);
+        }}
+        onChange={(e: any) => {
+          setInputValue(e.target.value);
+        }}
+        onBlur={(e: any) => {
+          const temp = moment(e.target.value, formatStr);
+          if (temp.isValid()) {
+            setInputValue(temp.format(formatStr));
+          } else setInputValue("");
         }}
       />
       <CalendarIcon

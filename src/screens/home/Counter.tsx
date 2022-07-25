@@ -1,6 +1,6 @@
 import { Button } from "components/UI/Button";
 import React from "react";
-import { decrement, increment } from "store/redux/counter";
+import { incrementByAmount } from "store/redux/counter";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,7 +13,7 @@ export const CounterSection = () => {
       <div style={{ display: "flex" }}>
         <Button
           onClick={() => {
-            dispatch(decrement());
+            dispatch(incrementByAmount(-1));
           }}
         >
           Minus-
@@ -21,7 +21,7 @@ export const CounterSection = () => {
         <div>{count}</div>
         <Button
           onClick={() => {
-            dispatch(increment());
+            dispatch(incrementByAmount(1));
           }}
         >
           Plus+
