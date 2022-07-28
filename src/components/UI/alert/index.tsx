@@ -6,6 +6,7 @@ import { ReactComponent as InfoIcon } from "./icon/info.svg";
 import { ReactComponent as WarningIcon } from "./icon/warning.svg";
 import { ReactComponent as CloseIcon } from "./icon/close.svg";
 
+const alertTime = 2500; //ms
 let alertFun: any = "";
 
 export default function alert(
@@ -31,7 +32,7 @@ export const Alert = () => {
       if (t) clearTimeout(t);
       t = setTimeout(() => {
         setOpen(false);
-      }, 2500);
+      }, alertTime);
     };
   }, []);
   const alertInfo = alertOptions[type] || {};
@@ -55,22 +56,22 @@ const alertOptions: any = {
   success: {
     icon: <SuccessIcon />,
     title: "Success",
-    color: "#5cb85c",
+    color: "#00BC3C",
   },
   error: {
     icon: <ErrorIcon />,
     title: "Error",
-    color: "#d9534f",
+    color: "#F44336",
   },
   info: {
     icon: <InfoIcon />,
     title: "Info",
-    color: "#5bc0de",
+    color: "#03A9F4",
   },
   warning: {
     icon: <WarningIcon />,
     title: "Warning",
-    color: "#f0ad4e",
+    color: "#FF9800",
   },
 };
 
@@ -79,7 +80,7 @@ const Styles = styled.div`
     transform: translateX(0);
     :after {
       right: 100%;
-      transition: linear 2.5s;
+      transition: linear ${alertTime}ms;
     }
   }
   :after {
