@@ -26,7 +26,7 @@ export const Alert = () => {
       type?: "success" | "error" | "info" | "warning"
     ) => {
       setOpen(true);
-      setType(type || "error");
+      setType(type || "success");
       setDescription(description);
       if (t) clearTimeout(t);
       t = setTimeout(() => {

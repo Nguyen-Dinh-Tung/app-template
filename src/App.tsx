@@ -1,13 +1,13 @@
 import React from "react";
 import ScreenRouter from "./screens";
 import AppProvider from "store";
-// import { Toast } from "components/UI/toast";
+import { Alert } from "components/UI/alert";
 
 export const App = () => {
   return (
     <AppProvider>
       <ScreenRouter />
-      {/* <Toast /> */}
+      <Alert />
     </AppProvider>
   );
 };

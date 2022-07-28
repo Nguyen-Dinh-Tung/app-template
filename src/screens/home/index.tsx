@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { CounterSection } from "./Counter";
 import "antd/dist/antd.css";
-// import toast from "components/UI/toast";
+import alert from "components/UI/alert";
 
 const HomeScreen = () => {
   const [date, setDate] = useState<any>("");
@@ -19,34 +19,34 @@ const HomeScreen = () => {
       Home Screen
       <div>Ant Design</div>
       <div style={{ display: "flex" }}>
-        {/* <Button
+        <Button
           onClick={() => {
-            toast("Success", "success");
+            alert("Success", "success");
           }}
         >
           Success
         </Button>
         <Button
           onClick={() => {
-            toast("Failllllllll", "error");
+            alert("Failllllllll", "error");
           }}
         >
           Error
         </Button>
         <Button
           onClick={() => {
-            toast("infooooooooooo", "info");
+            alert("infooooooooooo", "info");
           }}
         >
           Info
         </Button>
         <Button
           onClick={() => {
-            toast("warninggggggggggg", "warning");
+            alert("warninggggggggggg", "warning");
           }}
         >
           Warning
-        </Button> */}
+        </Button>
       </div>
       <Select
         options={Array(100)

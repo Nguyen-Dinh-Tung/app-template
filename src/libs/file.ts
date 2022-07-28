@@ -1,4 +1,4 @@
-import Alert from "components/UI/Alert";
+import alert from "components/UI/alert";
 import * as Excel from "exceljs";
 const server = process.env.REACT_APP_SERVER_API;
 
@@ -88,7 +88,7 @@ export const importExcelFile = async (
                 }
               } catch (error: any) {
                 resolve([]);
-                Alert(error.message, "error");
+                alert(error.message, "error");
                 console.log("excel input errorrrrrr", error);
               }
             });
@@ -130,7 +130,7 @@ export const importExcelFile2 = async (excelFile: any) => {
                 }
               } catch (error: any) {
                 resolve([]);
-                Alert(error.message, "error");
+                alert(error.message, "error");
                 console.log("excel input errorrrrrr", error);
               }
             });
