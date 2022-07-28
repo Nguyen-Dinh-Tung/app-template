@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const Button = styled.button<any>`
   border: unset;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   height: 40px;
   min-width: 100px;
   font-size: 16px;
