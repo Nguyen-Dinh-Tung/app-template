@@ -109,7 +109,7 @@ const Styles = styled.div`
   padding: 5px 15px 10px;
   border-radius: 4px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-  transition: 0.3s;
+  transition: 0.7s;
 
   .alert-icon {
     width: 24px;
