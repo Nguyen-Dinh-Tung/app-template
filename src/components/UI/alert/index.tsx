@@ -91,6 +91,7 @@ const Styles = styled.div`
     right: 0;
     height: 4px;
     background: rgba(0, 0, 0, 0.1);
+    transition: 1s;
   }
 
   min-height: 68px;

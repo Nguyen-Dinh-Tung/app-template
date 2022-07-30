@@ -14,6 +14,15 @@ export const request = ({ method, url, data, ...rest }: AxiosRequestConfig) => {
   return axiosConfig(options);
 };
 
+// axiosConfig.interceptors.response.use(
+//   (response: any) => {
+//     return response;
+//   },
+//   (error: any) => {
+//     return error;
+//   }
+// );
+
 export const configError = (err: any) => {
   if (err?.response?.data?.statusCode == 401) {
     localStorage.removeItem("access_token");
