@@ -4,6 +4,8 @@ import { incrementByAmount } from "store/redux/counter";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
+const a = 1;
+
 export const CounterSection = () => {
   const count = useSelector((state: any) => state.counter.value);
   const dispatch = useDispatch();
