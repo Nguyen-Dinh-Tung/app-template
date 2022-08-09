@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 const a = 1;
-const b = 2;
 
 export const CounterSection = () => {
   const count = useSelector((state: any) => state.counter.value);
