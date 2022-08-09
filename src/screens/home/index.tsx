@@ -65,7 +65,7 @@ const HomeScreen = () => {
         showSearch
       />
       <DatePicker
-        format={"DD/MM/YYYY HH:mm"}
+        format={"HH:mm DD/MM/YYYY"}
         suffixIcon="A"
         showTime
         onChange={(e: any) => {

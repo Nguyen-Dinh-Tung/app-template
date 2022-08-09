@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
+import { Header } from "./Header";
 const modalRoot: any = document.getElementById("modal-root");
 const htmlElement: any = document.querySelector("html");
 let isHtmlScroll = true;
@@ -10,14 +11,14 @@ interface Props {
   close: () => void;
 }
 
-export const Modal = (props: any) => {
+export const Modal = ({ label, isOpen, close, children, ...props }: any) => {
   useEffect(() => {
     // prevent html scroll when modal is open
-    if (props.isOpen && isHtmlScroll) {
+    if (isOpen && isHtmlScroll) {
       htmlElement.style.overflow = "hidden";
       isHtmlScroll = false;
     }
-    if (!props.isOpen && !isHtmlScroll) {
+    if (!isOpen && !isHtmlScroll) {
       htmlElement.style.overflow = "auto";
       isHtmlScroll = true;
     }
@@ -28,25 +29,28 @@ export const Modal = (props: any) => {
         isHtmlScroll = true;
       }
     };
-  }, [props.isOpen]);
-  if (!props.isOpen) return null;
+  }, [isOpen]);
+  if (!isOpen) return null;
   return ReactDOM.createPortal(
-    <Wrapper
+    <Styles
       {...props}
       onClick={() => {
-        props.close();
+        close();
         props.onClick && props.onClick();
       }}
     >
       <div>
-        <div onClick={(e: any) => e.stopPropagation()}>{props.children}</div>
+        <div onClick={(e: any) => e.stopPropagation()}>
+          {label && <Header label={label} close={() => close()} />}
+          {children}
+        </div>
       </div>
-    </Wrapper>,
+    </Styles>,
     modalRoot
   );
 };
 
-const Wrapper = styled.div`
+const Styles = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -60,6 +64,7 @@ const Wrapper = styled.div`
     min-width: 100%;
     padding: 50px 15px;
     display: flex;
+
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.7);
@@ -68,6 +73,10 @@ const Wrapper = styled.div`
       min-width: 200px;
       min-height: 200px;
       border-radius: 4px;
+
+      > div {
+        max-width: 100%;
+      }
     }
   }
 `;
