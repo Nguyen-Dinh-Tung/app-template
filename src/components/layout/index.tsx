@@ -20,8 +20,41 @@ export const Container = styled.div`
   }
 `;
 
-export const FlexCenter = styled.div`
+const convertWidths = (widths: any) => {
+  return widths
+    ?.map((width: any, ind: number) => {
+      return `
+        > :nth-child(${ind + 1}) {
+          width: ${width};
+        }
+      `;
+    })
+    .join("");
+};
+
+export const FlexBox = styled.div<any>`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  ${({ widths }: any) => widths && convertWidths(widths)};
+  gap: ${({ gap }) => gap};
+
+  ${(props: any) => {
+    let customCss = "";
+    const keys = Object.keys(props);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if (key.match(/widths-/)) {
+        const temp = key.split("widths-");
+        customCss =
+          customCss +
+          `@media only screen and (max-width: ${temp[1]}) {
+              ${convertWidths(props[key])}
+            }          
+          `;
+        delete props[key];
+      }
+    }
+    return customCss;
+  }}
 `;
