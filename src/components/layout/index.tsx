@@ -58,3 +58,29 @@ export const FlexBox = styled.div<any>`
     return customCss;
   }}
 `;
+
+export const GridBox = styled.div<any>`
+  display: grid;
+  grid-template-columns: ${({ widths }: any) => widths};
+  gap: ${({ gap }: any) => gap};
+  ${(props: any) => {
+    let customCss = "";
+    const keys = Object.keys(props);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if (key.match(/widths-/)) {
+        const temp = key.split("-");
+        customCss =
+          customCss +
+          `@media only screen and (max-width: ${temp[1]}) {
+              grid-template-columns: ${props[key]};
+              ${temp[2] && `gap: ${temp[2]};`}
+
+            }          
+          `;
+        delete props[key];
+      }
+    }
+    return customCss;
+  }}
+`;
