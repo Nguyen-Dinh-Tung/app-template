@@ -8,7 +8,6 @@ import { SlickSlider } from "components/UI/SlickSlider";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { CounterSection } from "./Counter";
-import "antd/dist/antd.css";
 import alert from "components/UI/alert";
 
 const HomeScreen = () => {

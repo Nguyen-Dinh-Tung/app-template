@@ -86,6 +86,35 @@ body{
 #root{
   height: 100%;
 }
+
+::-webkit-scrollbar-track{
+	background-color: #fff;
+}
+
+::-webkit-scrollbar{
+	width: 4px;
+	background-color: #e5e5e5;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	background-color: #e5e5e5;
+  width: 10px;
+  height: 4px;
+}
+
+body::-webkit-scrollbar{
+  width: 10px;
+}
+
+
+
+@media only screen and (max-width: 767px){
+  body::-webkit-scrollbar{
+    width: 0;
+  }
+}
 `;
 
 export const theme = {
