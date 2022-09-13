@@ -1,5 +1,4 @@
 import alert from "components/UI/alert";
-import * as Excel from "exceljs";
 import * as XLSX from "xlsx";
 const server = process.env.REACT_APP_SERVER_API;
 
