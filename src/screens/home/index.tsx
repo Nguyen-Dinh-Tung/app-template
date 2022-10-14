@@ -10,58 +10,102 @@ import styled from "styled-components";
 import { CounterSection } from "./Counter";
 import alert from "components/UI/alert";
 import { Link } from "react-router-dom";
-import { ErrorMessage, UIForm, useForm } from "components/UI/form";
+import { useForm } from "components/UI/form";
 import { UIDatePicker } from "components/UI/input/DatePicker";
 import moment from "moment";
 import { UISelect } from "components/UI/input/Select";
 import { UIGrid } from "components/layout";
 
-const defaultValues = { name: "", date: "", selected: "" };
+const defaultValues = {
+  name: "",
+  phone: "",
+  email: "",
+  password: "",
+  date: "",
+  selected: "",
+};
 
 const HomeScreen = () => {
   const [date, setDate] = useState<any>("");
   const [selecteds, setSlected] = useState([]);
-  const { values, errors, onChange, validate, handleSubmit } =
-    useForm(defaultValues);
+  const { values, onChange, register, onSubmit } = useForm(defaultValues);
   return (
     <Styles>
       <Link to="/login">
         <div>Home Screen</div>
       </Link>
-      <UIGrid template="1fr 1fr" gap="20px">
+      <UIGrid template="1fr 1fr" gap="15px 20px">
         <UIInput
-          value={values.name}
+          label="Tài khoản"
+          {...register("name", "account")}
+          // value={values.name}
+          // onChange={(e: any) => {
+          //   onChange("name", e.target.value);
+          // }}
+          // onBlur={() => validate("name", "account")}
+          // error={errors.name}
+        />
+        <UIInput
+          label="Số điện thoại"
+          // {...register("phone")}
+          value={values.phone}
           onChange={(e: any) => {
-            onChange("name", e.target.value);
+            onChange("phone", e.target.value);
           }}
-          error={errors.name}
+          // error={errors.phone}
+        />
+        <UIInput
+          label="Email"
+          {...register("email")}
+          // value={values.email}
+          // onChange={(e: any) => {
+          //   onChange("email", e.target.value);
+          // }}
+          // error={errors.email}
+        />
+        <UIInput
+          label="Mật khẩu"
+          {...register("password")}
+          // value={values.password}
+          // onChange={(e: any) => {
+          //   onChange("password", e.target.value);
+          // }}
+          // error={errors.password}
         />
         <UIDatePicker
-          value={values.date}
+          label="Ngày tháng"
+          {...register("date")}
+          // value={values.date}
           onChange={(e: any) => {
             console.log("aaaaaaonChange", e.toISOString());
             onChange("date", e.toISOString());
           }}
-          error={errors.date}
+          // error={errors.date}
         />
         <UISelect
+          label="Chọn label"
           options={Array(100)
             .fill("")
             .map((item: any, ind: number) => ({
               label: "Label " + ind,
               value: "value" + ind,
             }))}
-          value={values.selected}
+          {...register("selected")}
+          // value={values.selected}
           onChange={(e: any) => {
             console.log("aaaaaaonChange", e);
             onChange("selected", e);
           }}
-          error={errors.selected}
+          // error={errors.selected}
         />
         <UIButton
           onClick={() => {
-            if (handleSubmit()) {
-              console.log("valuesssss");
+            if (
+              onSubmit((values: any) => {
+                console.log("xozzzzzzzz", values);
+              })
+            ) {
+              // console.log("valuesssss22222", values);
             }
           }}
         >

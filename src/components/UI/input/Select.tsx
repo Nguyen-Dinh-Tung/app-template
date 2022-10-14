@@ -2,9 +2,10 @@ import { Select } from "antd";
 import styled from "styled-components";
 import { ErrorMessage } from "../form";
 
-export const UISelect = ({ error, ...props }: any) => {
+export const UISelect = ({ label, error, ...props }: any) => {
   return (
     <Styles>
+      {label && <label>{label}</label>}
       <Select
         //   options={Array(100)
         //     .fill("")
@@ -30,5 +31,15 @@ export const UISelect = ({ error, ...props }: any) => {
 const Styles = styled.div`
   .ant-select {
     width: 100%;
+    .ant-select-selector {
+      height: 40px;
+      border-radius: 4px;
+      border: 1px solid #e3e8f5;
+    }
+
+    .ant-select-selection-item {
+      display: flex;
+      align-items: center;
+    }
   }
 `;

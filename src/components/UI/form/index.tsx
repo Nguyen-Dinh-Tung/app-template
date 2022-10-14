@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 const validates: any = {
-  username: {
+  account: {
     regex: /^[a-z][a-z0-9_]{7,29}$/,
     error:
       "Tên đăng nhập gồm 8-30 kí tự, không được sử dụng chữ hoa và kí tự đặc biệt",
@@ -21,51 +21,82 @@ const validates: any = {
   },
 };
 
+/*
+<UIInput
+  label="Tài khoản"
+  {...register("name", "account")}
+  value={values.name}
+  onChange={(e: any) => {
+    onChange("name", e.target.value);
+  }}
+  onBlur={() => validate("name", "account")}
+  error={errors.name}
+/>
+*/
+
 export const useForm = (defaultValues: any) => {
   const [values, setValues] = useState(defaultValues);
   const [errors, setErrors] = useState<any>({});
 
+  const [registers, setRegisters] = useState<any>({});
+
   const onChange = (name: string, value: any) => {
     setValues((prev: any) => ({ ...prev, [name]: value }));
-    setErrors((prev: any) => ({ ...prev, [name]: "" }));
+    if (errors[name]) setErrors((prev: any) => ({ ...prev, [name]: "" }));
   };
 
-  const validate = useCallback((name: string, value: any, label?: string) => {
+  const validate = (name: string, type?: string) => {
+    const value = values[name];
     if (!value) {
       setErrors((prev: any) => ({
         ...prev,
-        [name]: "Vui lòng nhập " + label,
+        [name]: "Không được để trống",
       }));
       return false;
     }
 
-    const tempVal = validates[name];
+    const tempVal = validates[type || name];
 
     if (value && tempVal) {
       const check = value.match(tempVal.regex);
       if (!check) {
+        console.log("error", tempVal.error);
         setErrors((prev: any) => ({ ...prev, [name]: tempVal.error }));
         return false;
       }
     }
 
     return true;
-  }, []);
-
-  const handleSubmit = () => {
-    const res = Object.keys(defaultValues).map((name) =>
-      validate(name, values[name])
-    );
-    if (res.includes(false)) return false;
   };
-  return { values, errors, onChange, validate, handleSubmit };
-};
 
-export const UIForm = styled.form`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-`;
+  const register = (name: string, type?: string) => {
+    if (!registers.hasOwnProperty(name)) {
+      setRegisters((prev: any) => ({ ...prev, [name]: type }));
+    }
+    return {
+      value: values[name],
+      onChange: (e: any) => {
+        onChange(name, e.target.value);
+      },
+      onBlur: () => {
+        validate(name, type);
+      },
+      error: errors[name],
+    };
+  };
+
+  const onSubmit = (callback?: any) => {
+    const res = Object.keys(registers).map((name) => {
+      return validate(name, registers[name]);
+    });
+    if (res.includes(false)) return false;
+
+    callback && callback(values);
+    return true;
+  };
+
+  return { values, errors, setValues, onChange, onSubmit, register };
+};
 
 export const ErrorMessage = ({ children }: any) => {
   if (!children) return null;
