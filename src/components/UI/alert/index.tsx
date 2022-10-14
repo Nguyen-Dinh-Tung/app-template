@@ -9,6 +9,8 @@ import { ReactComponent as CloseIcon } from "./icon/close.svg";
 const alertTime = 2500; //ms
 let alertFun: any = "";
 
+// alert("Failllllllll", "error");
+
 export default function alert(
   description: any,
   type?: "success" | "error" | "info" | "warning"
