@@ -11,7 +11,7 @@ interface Props {
   close: () => void;
 }
 
-export const Modal = ({ label, isOpen, close, children, ...props }: any) => {
+export const UIModal = ({ label, isOpen, close, children, ...props }: any) => {
   useEffect(() => {
     // prevent html scroll when modal is open
     if (isOpen && isHtmlScroll) {

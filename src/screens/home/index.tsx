@@ -1,7 +1,7 @@
 import { DatePicker, Select, TimePicker } from "antd";
-import { Button } from "components/UI/Button";
+import { UIButton } from "components/UI/Button";
 // import { DatePicker } from "components/UI/date-picker";
-import { Input } from "components/UI/Input";
+import { UIInput } from "components/UI/input/Input";
 import { List } from "components/UI/List";
 // import { Select } from "components/UI/Select";
 import { SlickSlider } from "components/UI/SlickSlider";
@@ -10,17 +10,65 @@ import styled from "styled-components";
 import { CounterSection } from "./Counter";
 import alert from "components/UI/alert";
 import { Link } from "react-router-dom";
+import { ErrorMessage, UIForm, useForm } from "components/UI/form";
+import { UIDatePicker } from "components/UI/input/DatePicker";
+import moment from "moment";
+import { UISelect } from "components/UI/input/Select";
+import { UIGrid } from "components/layout";
+
+const defaultValues = { name: "", date: "", selected: "" };
 
 const HomeScreen = () => {
   const [date, setDate] = useState<any>("");
   const [selecteds, setSlected] = useState([]);
+  const { values, errors, onChange, validate, handleSubmit } =
+    useForm(defaultValues);
   return (
     <Styles>
       <Link to="/login">
         <div>Home Screen</div>
       </Link>
-
-      <Link to="/history">
+      <UIGrid template="1fr 1fr" gap="20px">
+        <UIInput
+          value={values.name}
+          onChange={(e: any) => {
+            onChange("name", e.target.value);
+          }}
+          error={errors.name}
+        />
+        <UIDatePicker
+          value={values.date}
+          onChange={(e: any) => {
+            console.log("aaaaaaonChange", e.toISOString());
+            onChange("date", e.toISOString());
+          }}
+          error={errors.date}
+        />
+        <UISelect
+          options={Array(100)
+            .fill("")
+            .map((item: any, ind: number) => ({
+              label: "Label " + ind,
+              value: "value" + ind,
+            }))}
+          value={values.selected}
+          onChange={(e: any) => {
+            console.log("aaaaaaonChange", e);
+            onChange("selected", e);
+          }}
+          error={errors.selected}
+        />
+        <UIButton
+          onClick={() => {
+            if (handleSubmit()) {
+              console.log("valuesssss");
+            }
+          }}
+        >
+          Submit
+        </UIButton>
+      </UIGrid>
+      {/* <Link to="/history">
         <div>Ant Design</div>
       </Link>
       <div>
@@ -110,7 +158,7 @@ const HomeScreen = () => {
             <p style={{ fontWeight: item, fontSize: "24px" }}>ROBOTO {item}</p>
           );
         }}
-      </List>
+      </List> */}
     </Styles>
   );
 };

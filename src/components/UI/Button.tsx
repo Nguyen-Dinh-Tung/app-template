@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const Button = styled.button<any>`
+export const UIButton = styled.button<any>`
   border: unset;
   font-family: Roboto, sans-serif;
   height: 40px;

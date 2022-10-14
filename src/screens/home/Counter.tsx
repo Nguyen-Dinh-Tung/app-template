@@ -1,4 +1,4 @@
-import { Button } from "components/UI/Button";
+import { UIButton } from "components/UI/Button";
 import React from "react";
 import { incrementByAmount } from "store/redux/counter";
 import styled from "styled-components";
@@ -11,21 +11,21 @@ export const CounterSection = () => {
     <Styles>
       <div style={{ padding: "50px" }}>Reduxxxxxxx</div>
       <div style={{ display: "flex" }}>
-        <Button
+        <UIButton
           onClick={() => {
             dispatch(incrementByAmount(-1));
           }}
         >
           Minus-
-        </Button>
+        </UIButton>
         <div>{count}</div>
-        <Button
+        <UIButton
           onClick={() => {
             dispatch(incrementByAmount(1));
           }}
         >
           Plus+
-        </Button>
+        </UIButton>
       </div>
     </Styles>
   );

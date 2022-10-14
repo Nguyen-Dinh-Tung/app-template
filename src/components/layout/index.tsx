@@ -20,8 +20,8 @@ export const Container = styled.div`
   }
 `;
 
-const convertWidths = (widths: any) => {
-  return widths
+const convertWidths = (template: any) => {
+  return template
     ?.map((width: any, ind: number) => {
       return `
         > :nth-child(${ind + 1}) {
@@ -32,11 +32,11 @@ const convertWidths = (widths: any) => {
     .join("");
 };
 
-export const FlexBox = styled.div<any>`
+export const UIFlex = styled.div<any>`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  ${({ widths }: any) => widths && convertWidths(widths)};
+  ${({ template }: any) => template && convertWidths(template)};
   gap: ${({ gap }) => gap};
 
   ${(props: any) => {
@@ -44,8 +44,8 @@ export const FlexBox = styled.div<any>`
     const keys = Object.keys(props);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      if (key.match(/widths-/)) {
-        const temp = key.split("widths-");
+      if (key.match(/template-/)) {
+        const temp = key.split("template-");
         customCss =
           customCss +
           `@media only screen and (max-width: ${temp[1]}) {
@@ -59,23 +59,22 @@ export const FlexBox = styled.div<any>`
   }}
 `;
 
-export const GridBox = styled.div<any>`
+export const UIGrid = styled.div<any>`
   display: grid;
-  grid-template-columns: ${({ widths }: any) => widths};
+  grid-template-columns: ${({ template }: any) => template};
   gap: ${({ gap }: any) => gap};
   ${(props: any) => {
     let customCss = "";
     const keys = Object.keys(props);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      if (key.match(/widths-/)) {
+      if (key.match(/template-/)) {
         const temp = key.split("-");
         customCss =
           customCss +
           `@media only screen and (max-width: ${temp[1]}) {
               grid-template-columns: ${props[key]};
               ${temp[2] && `gap: ${temp[2]};`}
-
             }          
           `;
         delete props[key];
