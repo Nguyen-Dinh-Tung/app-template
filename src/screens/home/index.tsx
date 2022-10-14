@@ -77,8 +77,7 @@ const HomeScreen = () => {
           {...register("date")}
           // value={values.date}
           onChange={(e: any) => {
-            console.log("aaaaaaonChange", e.toISOString());
-            onChange("date", e.toISOString());
+            onChange("date", e ? e.toISOString() : e);
           }}
           // error={errors.date}
         />
@@ -93,7 +92,6 @@ const HomeScreen = () => {
           {...register("selected")}
           // value={values.selected}
           onChange={(e: any) => {
-            console.log("aaaaaaonChange", e);
             onChange("selected", e);
           }}
           // error={errors.selected}
@@ -110,6 +108,13 @@ const HomeScreen = () => {
           }}
         >
           Submit
+        </UIButton>
+        <UIButton
+          onClick={() => {
+            alert("warninggggggggggg", "warning");
+          }}
+        >
+          Warning
         </UIButton>
       </UIGrid>
       {/* <Link to="/history">
