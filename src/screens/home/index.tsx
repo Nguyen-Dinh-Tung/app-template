@@ -9,14 +9,28 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { CounterSection } from "./Counter";
 import alert from "components/UI/alert";
+import { Link } from "react-router-dom";
 
 const HomeScreen = () => {
   const [date, setDate] = useState<any>("");
   const [selecteds, setSlected] = useState([]);
   return (
     <Styles>
-      Home Screen
-      <div>Ant Design</div>
+      <Link to="/login">
+        <div>Home Screen</div>
+      </Link>
+
+      <Link to="/history">
+        <div>Ant Design</div>
+      </Link>
+      <div>
+        <input
+          type="file"
+          onChange={(e: any) => {
+            console.log("efileee", e.target.files);
+          }}
+        />
+      </div>
       <div style={{ display: "flex" }}>
         <Button
           onClick={() => {
