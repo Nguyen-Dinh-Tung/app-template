@@ -32,7 +32,7 @@ const HomeScreen = () => {
   return (
     <Styles>
       <Link to="/login">
-        <div>Home Screen</div>
+        <div>Home Screen2</div>
       </Link>
     </Styles>
   );
