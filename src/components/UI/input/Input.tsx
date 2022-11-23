@@ -13,6 +13,11 @@ export const UIInput = ({ label, error, ...props }: any) => {
 };
 
 export const Styles = styled.div`
+  label {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
   input {
     padding: 0 11px;
     height: 40px;

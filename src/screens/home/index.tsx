@@ -28,12 +28,37 @@ const defaultValues = {
 const HomeScreen = () => {
   const [date, setDate] = useState<any>("");
   const [selecteds, setSlected] = useState([]);
-  const { values, onChange, register, onSubmit } = useForm(defaultValues);
+  const { values, errors, setValues, onChange, onSubmit, register } =
+    useForm(defaultValues);
   return (
     <Styles>
       <Link to="/login">
         <div>Home Screen2</div>
       </Link>
+      <UIInput
+        label="Tài khoản"
+        placeholder="Nhập tài khoản"
+        {...register("name", {
+          required: true,
+          validateRegex: "account",
+          pattern: {
+            regex: /[A-Za-z]{3}/,
+            message: "Không đúng định dạng",
+          },
+          validate: (value: any) => {
+            if (value.length < 10) return "Không được ít hơn 10 chữ số";
+          },
+        })}
+      />
+      <UIButton
+        onClick={() => {
+          onSubmit((data) => {
+            console.log("dataaaaaa", data);
+          });
+        }}
+      >
+        Submit
+      </UIButton>
     </Styles>
   );
 };

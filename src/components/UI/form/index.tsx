@@ -1,41 +1,44 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
-const validates: any = {
+export const regexOb: any = {
   account: {
     regex: /^[a-z][a-z0-9_]{7,29}$/,
-    error:
+    message:
       "Tên đăng nhập gồm 8-30 kí tự, không được sử dụng chữ hoa và kí tự đặc biệt",
   },
   phone: {
     regex: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-    error: "Vui lòng nhập số điện thoại hợp lệ",
+    message: "Vui lòng nhập số điện thoại hợp lệ",
   },
   email: {
     regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    error: "Vui lòng nhập email hợp lệ",
+    message: "Vui lòng nhập email hợp lệ",
   },
   password: {
     regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*?[^\w\s])\S{8,16}$/,
-    error: "Vui lòng nhập mật khẩu hợp lệ",
+    message: "Vui lòng nhập mật khẩu hợp lệ",
   },
 };
 
-/*
-<UIInput
+/* <UIInput
   label="Tài khoản"
-  {...register("name", "account")}
-  value={values.name}
-  onChange={(e: any) => {
-    onChange("name", e.target.value);
-  }}
-  onBlur={() => validate("name", "account")}
-  error={errors.name}
-/>
-*/
+  placeholder="Nhập tài khoản"
+  {...register("name", {
+    required: true,
+    validateRegex: "account",
+    pattern: {
+      regex: /[A-Za-z]{3}/,
+      message: "Không đúng định dạng",
+    },
+    validate: (value: any) => {
+      if (value !== "1") return "Không được khác 1";
+    },
+  })}
+/>; */
 
-export const useForm = (defaultValues: any) => {
-  const [values, setValues] = useState(defaultValues);
+export const useForm = (defaultValues?: any) => {
+  const [values, setValues] = useState(defaultValues || {});
   const [errors, setErrors] = useState<any>({});
 
   const [registers, setRegisters] = useState<any>({});
@@ -45,23 +48,60 @@ export const useForm = (defaultValues: any) => {
     if (errors[name]) setErrors((prev: any) => ({ ...prev, [name]: "" }));
   };
 
-  const validate = (name: string, type?: string) => {
+  const onChangeErrors = (name: string, message: string) => {
+    setErrors((prev: any) => ({ ...prev, [name]: message }));
+  };
+
+  const register = (name: string, config: any) => {
+    if (!registers.hasOwnProperty(name)) {
+      setRegisters((prev: any) => ({ ...prev, [name]: config }));
+    }
+    return {
+      value: values[name],
+      onChange: (e: any) => {
+        if (config.onChange) {
+          config.onChange(e);
+        } else onChange(name, e.target.value);
+      },
+      onBlur: () => {
+        validate(name);
+      },
+      error: errors[name],
+    };
+  };
+
+  const validate = (name: string) => {
     const value = values[name];
-    if (!value) {
-      setErrors((prev: any) => ({
-        ...prev,
-        [name]: "Không được để trống",
-      }));
+    const registerConfig = registers[name];
+
+    if (registerConfig?.required && !value) {
+      onChangeErrors(name, "Không được để trống");
       return false;
     }
 
-    const tempVal = validates[type || name];
-
-    if (value && tempVal) {
-      const check = value.match(tempVal.regex);
+    if (value && registerConfig?.pattern) {
+      const check = value.match(registerConfig?.pattern.regex);
       if (!check) {
-        console.log("error", tempVal.error);
-        setErrors((prev: any) => ({ ...prev, [name]: tempVal.error }));
+        onChangeErrors(name, registerConfig?.pattern.message);
+        return false;
+      }
+    }
+
+    if (value && registerConfig?.validateRegex) {
+      const temp = regexOb[registerConfig?.validateRegex];
+      if (temp) {
+        const check = value.match(temp.regex);
+        if (!check) {
+          onChangeErrors(name, temp.message);
+          return false;
+        }
+      }
+    }
+
+    if (value && registerConfig?.validate) {
+      const message = registerConfig.validate(value);
+      if (message) {
+        onChangeErrors(name, message);
         return false;
       }
     }
@@ -69,25 +109,9 @@ export const useForm = (defaultValues: any) => {
     return true;
   };
 
-  const register = (name: string, type?: string) => {
-    if (!registers.hasOwnProperty(name)) {
-      setRegisters((prev: any) => ({ ...prev, [name]: type }));
-    }
-    return {
-      value: values[name],
-      onChange: (e: any) => {
-        onChange(name, e.target.value);
-      },
-      onBlur: () => {
-        validate(name, type);
-      },
-      error: errors[name],
-    };
-  };
-
-  const onSubmit = (callback?: any) => {
+  const onSubmit = (callback?: (values: any) => void) => {
     const res = Object.keys(registers).map((name) => {
-      return validate(name, registers[name]);
+      return validate(name);
     });
     if (res.includes(false)) return false;
 
