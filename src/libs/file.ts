@@ -15,6 +15,9 @@ export const downloadFile = (data: any[], name: string) => {
   a.remove();
 };
 
+// const headers = ['STT', 'Mã Căn hộ', 'Họ và tên', 'CCCD/CMT', 'Mật khẩu'];
+// const widths = [10, 10, 20, 20, 20];
+
 export const exportExcelFiles = (
   data: any[] = [],
   headers: string[],
