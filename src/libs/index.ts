@@ -1,2 +1,4 @@
-export const formatNumber = (num: any) =>
-  new Intl.NumberFormat("de-DE").format(num || 0);
+export const formatNumber = (num: any, decimal?: number) =>
+  Number(num || 0).toLocaleString("de-DE", {
+    maximumFractionDigits: decimal || 0,
+  });

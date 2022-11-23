@@ -17,7 +17,7 @@ export const downloadFile = (data: any[], name: string) => {
 
 export const exportExcelFiles = (
   data: any[] = [],
-  headers: any,
+  headers: string[],
   fileName: string,
   widths?: number[]
 ) => {
