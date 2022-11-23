@@ -1,13 +1,13 @@
 import React from "react";
 import ScreenRouter from "./screens";
 import AppProvider from "store";
-import { Alert } from "components/UI/alert";
+import { NotifyComponent } from "components/UI/notify";
 
 export const App = () => {
   return (
     <AppProvider>
       <ScreenRouter />
-      <Alert />
+      <NotifyComponent />
     </AppProvider>
   );
 };

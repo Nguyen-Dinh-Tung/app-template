@@ -6,25 +6,25 @@ import { ReactComponent as InfoIcon } from "./icon/info.svg";
 import { ReactComponent as WarningIcon } from "./icon/warning.svg";
 import { ReactComponent as CloseIcon } from "./icon/close.svg";
 
-const alertTime = 2500; //ms
-let alertFun: any = "";
+const notifyTime = 2500; //ms
+let notifyFun: any = "";
 
-// alert("Failllllllll", "error");
+const notify = {
+  success: (description: string) => notifyFun(description, "success"),
+  error: (description: string) => notifyFun(description, "error"),
+  info: (description: string) => notifyFun(description, "info"),
+  warning: (description: string) => notifyFun(description, "warning"),
+};
 
-export default function alert(
-  description: any,
-  type?: "success" | "error" | "info" | "warning"
-) {
-  return alertFun(description, type);
-}
+export default notify;
 
-export const Alert = () => {
+export const NotifyComponent = () => {
   const [isOpen, setOpen] = useState(false);
   const [type, setType] = useState("success");
   const [description, setDescription] = useState("");
   useEffect(() => {
     let t: any = "";
-    alertFun = (
+    notifyFun = (
       description: any,
       type?: "success" | "error" | "info" | "warning"
     ) => {
@@ -34,17 +34,17 @@ export const Alert = () => {
       if (t) clearTimeout(t);
       t = setTimeout(() => {
         setOpen(false);
-      }, alertTime);
+      }, notifyTime);
     };
   }, []);
-  const alertInfo = alertOptions[type] || {};
+  const notifyInfo = notifyOptions[type] || {};
   return (
     <Styles
       className={isOpen ? "active" : ""}
-      style={{ background: alertInfo.color }}
+      style={{ background: notifyInfo.color }}
       onClick={() => !isOpen && setOpen(true)}
     >
-      <div className="alert-icon">{alertInfo.icon}</div>
+      <div className="alert-icon">{notifyInfo.icon}</div>
       <div className="alert-content">
         {/* <div className="alert-title">{alertInfo.title}</div> */}
         <div className="alert-description">{description}</div>
@@ -54,7 +54,7 @@ export const Alert = () => {
   );
 };
 
-const alertOptions: any = {
+const notifyOptions: any = {
   success: {
     icon: <SuccessIcon />,
     title: "Success",
@@ -82,7 +82,7 @@ const Styles = styled.div`
     transform: translateX(0);
     :after {
       right: 100%;
-      transition: linear ${alertTime}ms;
+      transition: linear ${notifyTime}ms;
     }
   }
   :after {

@@ -8,7 +8,7 @@ import { SlickSlider } from "components/UI/SlickSlider";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { CounterSection } from "./Counter";
-import alert from "components/UI/alert";
+import alert from "components/UI/notify";
 import { Link } from "react-router-dom";
 import { useForm } from "components/UI/form";
 import { UIDatePicker } from "components/UI/input/DatePicker";
