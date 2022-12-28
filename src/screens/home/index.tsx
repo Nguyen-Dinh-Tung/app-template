@@ -15,7 +15,7 @@ import { UIDatePicker } from "components/UI/input/DatePicker";
 import moment from "moment";
 import { UISelect } from "components/UI/input/Select";
 import { UIGrid } from "components/layout";
-import { api } from "store/api/axios";
+import { api } from "store/api";
 import { useSelector } from "react-redux";
 
 const defaultValues = {
