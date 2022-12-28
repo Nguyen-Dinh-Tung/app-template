@@ -4,6 +4,8 @@ import notify from "components/UI/notify";
 import store from "store/redux";
 import API from "./url";
 
+const ACCESS_TOKEN = "ACCESS_TOKEN";
+
 const instanceAxios = {
   baseURL: process.env.REACT_APP_USER_URL,
 };
@@ -11,7 +13,7 @@ const instanceAxios = {
 const axiosConfig = axios.create(instanceAxios);
 
 export const request = ({ method, url, data, ...rest }: AxiosRequestConfig) => {
-  let token = localStorage.getItem("ACCESS_TOKEN");
+  let token = localStorage.getItem(ACCESS_TOKEN);
   let options: any = { method, url, data, ...rest };
   if (token) {
     options = {
@@ -56,8 +58,9 @@ axiosConfig.interceptors.request.use(
     return config;
   },
   function (error) {
+    notify.error(configError(error));
     setLoading(false);
-    return Promise.reject(error);
+    throw error;
   }
 );
 
@@ -70,14 +73,13 @@ axiosConfig.interceptors.response.use(
   (error: any) => {
     notify.error(configError(error));
     setLoading(false);
-    return Promise.reject(error);
-    // return false;
+    throw error;
   }
 );
 
 export const configError = (err: any) => {
   if (err?.response?.status == 401) {
-    localStorage.removeItem("ACCESS_TOKEN");
+    localStorage.removeItem(ACCESS_TOKEN);
     store.dispatch({ type: "user", payload: null });
     return "Unauthorized";
   }
