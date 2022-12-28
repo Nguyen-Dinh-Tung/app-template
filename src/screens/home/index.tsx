@@ -2,7 +2,7 @@ import { DatePicker, Select, TimePicker } from "antd";
 import { UIButton } from "components/UI/Button";
 // import { DatePicker } from "components/UI/date-picker";
 import { UIInput } from "components/UI/input/Input";
-import { List } from "components/UI/List";
+import { UIList } from "components/UI/List";
 // import { Select } from "components/UI/Select";
 import { SlickSlider } from "components/UI/SlickSlider";
 import React, { useState } from "react";
@@ -15,6 +15,8 @@ import { UIDatePicker } from "components/UI/input/DatePicker";
 import moment from "moment";
 import { UISelect } from "components/UI/input/Select";
 import { UIGrid } from "components/layout";
+import { api } from "store/api/axios";
+import { useSelector } from "react-redux";
 
 const defaultValues = {
   name: "",
@@ -30,6 +32,12 @@ const HomeScreen = () => {
   const [selecteds, setSlected] = useState([]);
   const { values, errors, setValues, onChange, onSubmit, register } =
     useForm(defaultValues);
+
+  const onSend = () => {
+    onSubmit(() => {
+      console.log("xxxxxxx22");
+    });
+  };
   return (
     <Styles>
       <Link to="/login">
@@ -51,10 +59,16 @@ const HomeScreen = () => {
         })}
       />
       <UIButton
-        onClick={() => {
-          onSubmit((data) => {
-            console.log("dataaaaaa", data);
-          });
+        // onClick={() => {
+        //   onSubmit((data) => {
+        //     console.log("dataaaaaa", data);
+        //   });
+        // }}
+        onClick={async () => {
+          const res = await api.get(
+            "http://183.81.32.36:7007/api/conference/TEST2x"
+          );
+          console.log("resssss", res);
         }}
       >
         Submit

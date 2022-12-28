@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 export const regexOb: any = {
@@ -110,9 +110,7 @@ export const useForm = (defaultValues?: any) => {
   };
 
   const onSubmit = (callback?: (values: any) => void) => {
-    const res = Object.keys(registers).map((name) => {
-      return validate(name);
-    });
+    const res = Object.keys(registers).map((name) => validate(name));
     if (res.includes(false)) return false;
 
     callback && callback(values);

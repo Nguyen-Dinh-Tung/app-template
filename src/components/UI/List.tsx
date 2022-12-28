@@ -6,17 +6,17 @@ interface Props {
   children?: any;
 }
 
-export const List = ({ items, children, ...props }: any) => {
+export const UIList = ({ items, children, ...props }: any) => {
   return (
-    <Wrapper {...props}>
+    <Styles {...props}>
       {items.map(
         (item: any, ind: number) =>
           children && React.cloneElement(children(item, ind), { key: ind })
       )}
-    </Wrapper>
+    </Styles>
   );
 };
 
-const Wrapper = styled.div`
+const Styles = styled.div`
   -webkit-overflow-scrolling: touch;
 `;

@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { setLoading } from "components/layout/ApiLoading";
 import notify from "components/UI/notify";
 import store from "store/redux";
 import API from "./url";
@@ -48,13 +49,29 @@ const api = {
     createAxios("get", url, undefined, { responType: "blob" }),
 };
 
+//handle Request
+axiosConfig.interceptors.request.use(
+  function (config) {
+    setLoading(true);
+    return config;
+  },
+  function (error) {
+    setLoading(false);
+    return Promise.reject(error);
+  }
+);
+
+//handle Response
 axiosConfig.interceptors.response.use(
   (response: any) => {
+    setLoading(false);
     return response;
   },
   (error: any) => {
     notify.error(configError(error));
-    return false;
+    setLoading(false);
+    return Promise.reject(error);
+    // return false;
   }
 );
 
