@@ -62,6 +62,11 @@ a{
   color: unset;
 }
 
+h1, h2, h3, h4, h5, h6,p,label{
+  display: block;
+  margin: 0;
+}
+
 html{
   display:block;
   height: 100%;
