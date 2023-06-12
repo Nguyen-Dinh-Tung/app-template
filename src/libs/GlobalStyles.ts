@@ -60,6 +60,9 @@ ul{
 a{
   text-decoration: none;
   color: unset;
+  :hover{
+    color: ${({ theme }: any) => theme.primary};
+  }
 }
 
 h1, h2, h3, h4, h5, h6,p,label{

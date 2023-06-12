@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+const emptyString = "Không được để trống";
+
 export const regexOb: any = {
   account: {
     regex: /^[a-z][a-z0-9_]{7,29}$/,
@@ -57,7 +59,7 @@ export const useForm = (defaultValues?: any) => {
       setRegisters((prev: any) => ({ ...prev, [name]: config }));
     }
     return {
-      value: values[name],
+      value: config.value !== undefined ? config.value : values[name],
       onChange: (e: any) => {
         if (config.onChange) {
           config.onChange(e);
@@ -75,7 +77,7 @@ export const useForm = (defaultValues?: any) => {
     const registerConfig = registers[name];
 
     if (registerConfig?.required && !value) {
-      onChangeErrors(name, "Không được để trống");
+      onChangeErrors(name, emptyString);
       return false;
     }
 
