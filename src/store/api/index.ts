@@ -7,7 +7,7 @@ import API from "./url";
 const ACCESS_TOKEN = "ACCESS_TOKEN";
 
 const instanceAxios = {
-  baseURL: process.env.REACT_APP_USER_URL,
+  baseURL: process.env.REACT_APP_SERVER_URI,
 };
 
 const axiosConfig = axios.create(instanceAxios);
