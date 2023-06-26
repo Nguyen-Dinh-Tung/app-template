@@ -33,3 +33,32 @@ function reducer(state = defaultValues, { type, payload }: any) {
 const store = configureStore({ reducer });
 
 export default store;
+
+export const updateStore = (type: string, payload: any) => {
+  store.dispatch({ type, payload });
+};
+
+// const counterSlice = createSlice({
+//   name: "app",
+//   initialState: {
+//     user: null,
+//     conference: {},
+//     topic: {},
+//     conferenceTime: {},
+//     authorityForMe: [],
+//     votedTopics: [],
+//   },
+//   reducers: {
+//     updateUser: (state, action) => {
+//       state.user = action.payload;
+//     },
+//   },
+// });
+
+// export const { updateUser } = counterSlice.actions;
+
+// const store = configureStore({
+//   reducer: {
+//     app: counterSlice.reducer,
+//   },
+// });

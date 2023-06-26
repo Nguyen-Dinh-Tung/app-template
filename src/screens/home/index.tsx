@@ -16,7 +16,8 @@ import moment from "moment";
 import { UISelect } from "components/UI/input/Select";
 import { UIGrid } from "components/layout";
 import { api } from "store/api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateStore } from "store/redux";
 
 const defaultValues = {
   name: "",
@@ -28,36 +29,15 @@ const defaultValues = {
 };
 
 const HomeScreen = () => {
-  const [date, setDate] = useState<any>("");
-  const [selecteds, setSlected] = useState([]);
-  const { values, errors, setValues, onChange, onSubmit, register } =
-    useForm(defaultValues);
-
-  const onSend = () => {
-    onSubmit(() => {
-      console.log("xxxxxxx22");
-    });
-  };
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  console.log("stateeeeeee", state);
   return (
     <Styles>
       <Link to="/login">
         <div>Home Screen2</div>
       </Link>
-      <UIInput
-        label="Tài khoản"
-        placeholder="Nhập tài khoản"
-        {...register("name", {
-          required: true,
-          validateRegex: "account",
-          pattern: {
-            regex: /[A-Za-z]{3}/,
-            message: "Không đúng định dạng",
-          },
-          validate: (value: any) => {
-            if (value.length < 10) return "Không được ít hơn 10 chữ số";
-          },
-        })}
-      />
+
       <UIButton
         // onClick={() => {
         //   onSubmit((data) => {
@@ -65,10 +45,7 @@ const HomeScreen = () => {
         //   });
         // }}
         onClick={async () => {
-          const res = await api.get(
-            "http://183.81.32.36:7007/api/conference/TEST2x"
-          );
-          console.log("resssss", res);
+          updateStore("user", 5);
         }}
       >
         Submit
