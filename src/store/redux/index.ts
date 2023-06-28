@@ -1,6 +1,24 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-const defaultValues = {
+// type StoreType =
+//   | "user"
+//   | "conference"
+//   | "topic"
+//   | "conferenceTime"
+//   | "authorityForMe"
+//   | "votedTopics";
+
+interface StoreValues {
+  user: any;
+  conference: any;
+  topic: any;
+  conferenceTime: any;
+  authorityForMe: any;
+  votedTopics: any;
+}
+type StoreType = keyof StoreValues;
+
+const defaultValues: StoreValues = {
   user: null,
   conference: {},
   topic: {},
@@ -34,7 +52,7 @@ const store = configureStore({ reducer });
 
 export default store;
 
-export const updateStore = (type: string, payload: any) => {
+export const updateStore = (type: StoreType, payload: any) => {
   store.dispatch({ type, payload });
 };
 
