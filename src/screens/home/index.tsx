@@ -1,60 +1,37 @@
-import { UIButton } from "components/UI/Button";
-import { UIList } from "components/UI/List";
+import { UISlider } from "components/UI/Slider";
 import styled from "styled-components";
 
 export const HomeScreen = (props: any) => {
-  const prev = () => {
-    const el = document.getElementsByClassName("slide-cover")[0];
-    el.scrollBy({ behavior: "smooth", top: 0, left: -10 });
-  };
-  const next = () => {
-    const el = document.getElementsByClassName("slide-cover")[0];
-    el.scrollBy({ behavior: "smooth", top: 0, left: 10 });
-  };
   return (
     <Styles>
-      <div className="slide-wrapper">
-        <UIButton onClick={prev}>Left</UIButton>
-        <UIList items={Array(10).fill("")} className="slide-cover">
-          {(item: any, index: number) => {
-            return <div className="slide-item">{index + 1}</div>;
-          }}
-        </UIList>
-        <UIButton onClick={next}>Right</UIButton>
-      </div>
+      <UISlider
+        items={Array(10).fill("")}
+        slidesToShow={4}
+        responsive={[
+          { breakpoint: 1199, slidesToShow: 3 },
+          { breakpoint: 767, slidesToShow: 2 },
+          { breakpoint: 480, slidesToShow: 1 },
+        ]}
+      >
+        {(item: any, index: number) => {
+          return <div className="slide-item">{index + 1}</div>;
+        }}
+      </UISlider>
     </Styles>
   );
 };
 
 const Styles = styled.div`
-  width: 100%;
-  height: 100%;
-  margin: 50px 0;
-  .slide-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
+  padding: 50px;
   .slide-item {
-    min-width: 100px;
-    height: 100px;
-    background-color: blue;
+    width: 100px;
+    height: 50px;
+    color: white;
+    background: blue;
+    font-size: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
     border-radius: 4px;
-    color: white;
-    scroll-snap-align: start;
-  }
-
-  .slide-cover {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    /* width: 448px; */
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
   }
 `;

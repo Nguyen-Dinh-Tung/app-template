@@ -77,18 +77,3 @@ const Styles = styled.div`
     }
   }
 `;
-
-export const SlickSlider2 = ({ items, settings, children }: any) => {
-  return (
-    <Styles2>
-      <Slider {...defaultSettings} {...(settings || {})}>
-        {items.map(
-          (item: any, ind: number) =>
-            children && React.cloneElement(children(item, ind), { key: ind })
-        )}
-      </Slider>
-    </Styles2>
-  );
-};
-
-const Styles2 = styled.div``;
