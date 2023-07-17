@@ -1,59 +1,60 @@
-import { DatePicker, Select, TimePicker } from "antd";
 import { UIButton } from "components/UI/Button";
-// import { DatePicker } from "components/UI/date-picker";
-import { UIInput } from "components/UI/input/Input";
 import { UIList } from "components/UI/List";
-// import { Select } from "components/UI/Select";
-import { SlickSlider } from "components/UI/SlickSlider";
-import React, { useState } from "react";
 import styled from "styled-components";
-import { CounterSection } from "./Counter";
-import alert from "components/UI/notify";
-import { Link } from "react-router-dom";
-import { useForm } from "components/UI/form";
-import { UIDatePicker } from "components/UI/input/DatePicker";
-import moment from "moment";
-import { UISelect } from "components/UI/input/Select";
-import { UIGrid } from "components/layout";
-import { api } from "store/api";
-import { useDispatch, useSelector } from "react-redux";
-import { updateStore } from "store/redux";
 
-const defaultValues = {
-  name: "",
-  phone: "",
-  email: "",
-  password: "",
-  date: "",
-  selected: "",
-};
-
-const HomeScreen = () => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  console.log("stateeeeeee", state);
+export const HomeScreen = (props: any) => {
+  const prev = () => {
+    const el = document.getElementsByClassName("slide-cover")[0];
+    el.scrollBy({ behavior: "smooth", top: 0, left: -10 });
+  };
+  const next = () => {
+    const el = document.getElementsByClassName("slide-cover")[0];
+    el.scrollBy({ behavior: "smooth", top: 0, left: 10 });
+  };
   return (
     <Styles>
-      <Link to="/login">
-        <div>Home Screen2</div>
-      </Link>
-
-      <UIButton
-        // onClick={() => {
-        //   onSubmit((data) => {
-        //     console.log("dataaaaaa", data);
-        //   });
-        // }}
-        onClick={async () => {
-          updateStore("user", 5);
-        }}
-      >
-        Submit
-      </UIButton>
+      <div className="slide-wrapper">
+        <UIButton onClick={prev}>Left</UIButton>
+        <UIList items={Array(10).fill("")} className="slide-cover">
+          {(item: any, index: number) => {
+            return <div className="slide-item">{index + 1}</div>;
+          }}
+        </UIList>
+        <UIButton onClick={next}>Right</UIButton>
+      </div>
     </Styles>
   );
 };
 
-export default HomeScreen;
+const Styles = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 50px 0;
+  .slide-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
 
-const Styles = styled.div``;
+  .slide-item {
+    min-width: 100px;
+    height: 100px;
+    background-color: blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    border-radius: 4px;
+    color: white;
+    scroll-snap-align: start;
+  }
+
+  .slide-cover {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    /* width: 448px; */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+`;

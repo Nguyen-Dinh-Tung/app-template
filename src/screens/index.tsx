@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HistoryScreen from "./history";
-import HomeScreen from "./home";
+import { HomeScreen } from "./home";
 import LoginScreen from "./login";
 import { AuthLayout, LoginLayout } from "./main";
 
