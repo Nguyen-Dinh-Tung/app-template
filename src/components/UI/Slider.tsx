@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 /* <UISlider
@@ -29,6 +29,24 @@ export const UISlider = ({
   slidesToShow,
 }: Props) => {
   const ref: any = useRef();
+  const [isScroll, setScroll] = useState(false);
+  const [clientX, setClientX] = useState(0);
+  const onMouseDown = (e: any) => {
+    setScroll(true);
+    setClientX(e.clientX);
+  };
+  const onMouseMove = (e: any) => {
+    if (isScroll) {
+      const left = clientX - e.clientX;
+      ref.current.scrollBy({ left: left });
+      setClientX(e.clientX);
+    }
+  };
+  const onMouseUp = () => {
+    setScroll(false);
+    setClientX(0);
+  };
+
   return (
     <Styles responsive={responsive} slidesToShow={slidesToShow}>
       <div
@@ -39,7 +57,17 @@ export const UISlider = ({
       >
         Prev
       </div>
-      <div className="slide-cover" ref={ref}>
+      <div
+        className="slide-cover"
+        ref={ref}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        style={{
+          scrollSnapType: isScroll ? "unset" : "x mandatory",
+          cursor: isScroll ? "grabbing" : "unset",
+        }}
+      >
         {items.map(
           (item: any, ind: number) =>
             children && React.cloneElement(children(item, ind), { key: ind })
@@ -74,7 +102,6 @@ const Styles = styled.div<any>`
   }
 
   .slide-cover {
-    background: red;
     display: flex;
     align-items: center;
     gap: 16px;
