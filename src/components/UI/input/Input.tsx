@@ -1,12 +1,12 @@
-import React from "react";
 import styled from "styled-components";
 import { ErrorMessage } from "../form";
+import { NumberFormat } from "./NumberFormat";
 
-export const UIInput = ({ label, error, ...props }: any) => {
+export const UIInput = ({ label, error, isFormatNumber, ...props }: any) => {
   return (
     <Styles>
       {label && <label>{label}</label>}
-      <input {...props} />
+      {isFormatNumber ? <NumberFormat {...props} /> : <input {...props} />}
       <ErrorMessage>{error}</ErrorMessage>
     </Styles>
   );

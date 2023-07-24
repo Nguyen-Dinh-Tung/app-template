@@ -52,7 +52,7 @@ export const UISlider = ({
       <div
         className="slide-action"
         onClick={() => {
-          ref.current.scrollBy({ left: -10, behavior: "smooth" });
+          ref.current.scrollBy({ left: -50, behavior: "smooth" });
         }}
       >
         Prev
@@ -63,6 +63,7 @@ export const UISlider = ({
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
+        onMouseOut={onMouseUp}
         style={{
           scrollSnapType: isScroll ? "unset" : "x mandatory",
           cursor: isScroll ? "grabbing" : "unset",
@@ -76,7 +77,7 @@ export const UISlider = ({
       <div
         className="slide-action"
         onClick={() => {
-          ref.current.scrollBy({ left: 10, behavior: "smooth" });
+          ref.current.scrollBy({ left: 100, behavior: "smooth" });
         }}
       >
         Next
@@ -96,6 +97,7 @@ const Styles = styled.div<any>`
   align-items: center;
   justify-content: center;
   gap: 16px;
+  user-select: none;
 
   .slide-action {
     cursor: pointer;

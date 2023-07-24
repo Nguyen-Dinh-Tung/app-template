@@ -1,12 +1,15 @@
 import { UISlider } from "components/UI/Slider";
+import { UIInput } from "components/UI/input/Input";
+import { useState } from "react";
 import styled from "styled-components";
 
 export const HomeScreen = (props: any) => {
+  const [num, setNum] = useState("");
   return (
     <Styles>
       <UISlider
-        items={Array(10).fill("")}
-        slidesToShow={4}
+        items={Array(50).fill("")}
+        slidesToShow={10}
         responsive={[
           { breakpoint: 1199, slidesToShow: 3 },
           { breakpoint: 767, slidesToShow: 2 },
@@ -17,15 +20,27 @@ export const HomeScreen = (props: any) => {
           return <div className="slide-item">{index + 1}</div>;
         }}
       </UISlider>
+
+      <UIInput
+        isFormatNumber
+        // value={num}
+        // onChange={(value: any) => {
+        //   console.log("valueeee", value);
+        //   setNum(value);
+        // }}
+      />
     </Styles>
   );
 };
 
 const Styles = styled.div`
   padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   .slide-item {
     width: 100px;
-    height: 50px;
+    height: 100px;
     color: white;
     background: blue;
     font-size: 32px;
