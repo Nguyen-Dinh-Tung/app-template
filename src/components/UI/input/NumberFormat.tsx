@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // import { NumericFormat } from "react-number-format";
 
@@ -14,15 +14,14 @@ import { useRef, useState } from "react";
 //   );
 // };
 
-const numberRegex = /^([0-9]{0,})([.]{0,1})([0-9]{0,})$/;
+const numberRegex = /^([-]{0,1})([0-9]{0,})([.]{0,1})([0-9]{0,})$/;
+const isNumber = (value: string) => numberRegex.test(value);
 
-const stringToNumber = (value: any) => {
-  let temp = value;
-  temp = temp.replaceAll(".", "").replaceAll(",", ".");
-  return temp;
+const stringToNumber = (value: string) => {
+  return value.replaceAll(".", "").replaceAll(",", ".");
 };
 
-const numberToString = (value: any) => {
+const numberToString = (value: string) => {
   const temp = value.split(",");
   let result = "";
   if (temp[0])
@@ -32,26 +31,22 @@ const numberToString = (value: any) => {
   return result;
 };
 
-const isNumber = (value: string) => {
-  const temp = value.split(",");
-
-  return numberRegex.test(value);
-};
-
-export const NumberFormat = ({ value, ...props }: any) => {
-  const ref: any = useRef();
+export const NumberFormat = ({ value, defaultValue, ...props }: any) => {
+  const ref = useRef();
+  // useEffect(()=>{
+  //   handleChange(defaultValue)
+  // },[defaultValue])
   const handleChange = (e: any) => {
-    const value = e.target.value;
-
-    const temp = stringToNumber(value);
-    console.log("changeee", value, isNumber(temp));
+    const inputValue = e.target.value;
+    const temp = stringToNumber(inputValue);
     if (isNumber(temp)) {
-      //   props.onChange(temp);
-      e.target.value = numberToString(value);
+      props.onChange && props.onChange(temp);
+      e.target.value = numberToString(inputValue);
     } else {
       const caret = e.target.selectionStart;
       e.target.value =
-        value.slice(0, caret - 1) + value.slice(caret, value.length);
+        inputValue.slice(0, caret - 1) +
+        inputValue.slice(caret, inputValue.length);
       e.target.selectionStart = caret;
       e.target.selectionEnd = caret - 1;
     }
@@ -59,14 +54,12 @@ export const NumberFormat = ({ value, ...props }: any) => {
   return (
     <input
       {...props}
-      //   value={formatedValue}
-      //   pattern={numberRegex}
-      //   maxlength="5"
       ref={ref}
       onChange={handleChange}
       onPaste={(e: any) => {
         setTimeout(() => {
-          if (!isNumber(e.target.value)) e.target.value = "";
+          const temp = stringToNumber(e.target.value);
+          if (!isNumber(temp)) e.target.value = "";
         }, 0);
       }}
     />
