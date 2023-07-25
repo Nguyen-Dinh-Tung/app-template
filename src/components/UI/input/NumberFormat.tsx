@@ -21,17 +21,27 @@ const stringToNumber = (value: string) => {
   return value.replaceAll(".", "").replaceAll(",", ".");
 };
 
-const numberToString = (value: string) => {
+const numberToString = (value: string, decimalScale: number) => {
   const temp = value.split(",");
   let result = "";
   if (temp[0])
     result = Number(temp[0].replaceAll(".", "")).toLocaleString("de-DE");
-  if (temp[1] !== undefined)
-    result = `${result},${temp[1].replaceAll(".", "")}`;
+  if (temp[1] !== undefined) {
+    let decimalPart = temp[1].replaceAll(".", "");
+    if (decimalScale) {
+      decimalPart = decimalPart.slice(0, decimalScale);
+    }
+    result = `${result},${decimalPart}`;
+  }
   return result;
 };
 
-export const NumberFormat = ({ value, defaultValue, ...props }: any) => {
+export const NumberFormat = ({
+  value,
+  defaultValue,
+  decimalScale,
+  ...props
+}: any) => {
   const ref = useRef();
   // useEffect(()=>{
   //   handleChange(defaultValue)
@@ -39,16 +49,17 @@ export const NumberFormat = ({ value, defaultValue, ...props }: any) => {
   const handleChange = (e: any) => {
     const inputValue = e.target.value;
     const temp = stringToNumber(inputValue);
+
     if (isNumber(temp)) {
       props.onChange && props.onChange(temp);
-      e.target.value = numberToString(inputValue);
+      e.target.value = numberToString(inputValue, decimalScale);
     } else {
       const caret = e.target.selectionStart;
       e.target.value =
         inputValue.slice(0, caret - 1) +
         inputValue.slice(caret, inputValue.length);
-      e.target.selectionStart = caret;
-      e.target.selectionEnd = caret - 1;
+
+      e.target.setSelectionRange(caret, caret - 1);
     }
   };
   return (

@@ -24,10 +24,9 @@ export const HomeScreen = (props: any) => {
       <UIInput
         isFormatNumber
         // value={num}
-        // onChange={(value: any) => {
-        //   console.log("valueeee", value);
-        //   setNum(value);
-        // }}
+        onChange={(value: any) => {
+          setNum(value);
+        }}
       />
     </Styles>
   );
