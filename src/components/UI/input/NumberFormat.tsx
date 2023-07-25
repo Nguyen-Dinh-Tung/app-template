@@ -25,8 +25,10 @@ const stringToNumber = (value: any) => {
 const numberToString = (value: any) => {
   const temp = value.split(",");
   let result = "";
-  if (temp[0]) result = Number(temp[0]).toLocaleString("de-DE");
-  if (temp[1] !== undefined) result = `${result},${temp[1]}`;
+  if (temp[0])
+    result = Number(temp[0].replaceAll(".", "")).toLocaleString("de-DE");
+  if (temp[1] !== undefined)
+    result = `${result},${temp[1].replaceAll(".", "")}`;
   return result;
 };
 
@@ -38,16 +40,14 @@ const isNumber = (value: string) => {
 
 export const NumberFormat = ({ value, ...props }: any) => {
   const ref: any = useRef();
-  const [realValue, setRealValue] = useState("");
-  const [formatedValue, setFormatedValue] = useState("");
   const handleChange = (e: any) => {
     const value = e.target.value;
 
     const temp = stringToNumber(value);
-    console.log("changeee", value, isNumber(value));
-    if (isNumber(value)) {
+    console.log("changeee", value, isNumber(temp));
+    if (isNumber(temp)) {
       //   props.onChange(temp);
-      //   e.target.value = numberToString(value);
+      e.target.value = numberToString(value);
     } else {
       const caret = e.target.selectionStart;
       e.target.value =
@@ -64,6 +64,11 @@ export const NumberFormat = ({ value, ...props }: any) => {
       //   maxlength="5"
       ref={ref}
       onChange={handleChange}
+      onPaste={(e: any) => {
+        setTimeout(() => {
+          if (!isNumber(e.target.value)) e.target.value = "";
+        }, 0);
+      }}
     />
   );
 };
