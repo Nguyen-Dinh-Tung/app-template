@@ -1,12 +1,17 @@
 import { UISlider } from "components/UI/Slider";
 import { UIInput } from "components/UI/input/Input";
+import { UIModal } from "components/UI/modal";
 import { useState } from "react";
 import styled from "styled-components";
 
 export const HomeScreen = (props: any) => {
   const [num, setNum] = useState("");
+  const [isOpen, setOpen] = useState(false);
   return (
     <Styles>
+      <UIModal isOpen={isOpen} close={() => setOpen(false)} label="Headerrrrr">
+        <div>AAAAAAAA</div>
+      </UIModal>
       <UISlider
         items={Array(50).fill("")}
         slidesToShow={10}
@@ -17,7 +22,11 @@ export const HomeScreen = (props: any) => {
         ]}
       >
         {(item: any, index: number) => {
-          return <div className="slide-item">{index + 1}</div>;
+          return (
+            <div className="slide-item" onClick={() => setOpen(true)}>
+              {index + 1}
+            </div>
+          );
         }}
       </UISlider>
 

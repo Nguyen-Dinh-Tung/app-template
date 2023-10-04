@@ -10,11 +10,12 @@ export const Header = ({ label, ...props }: any) => {
   return (
     <Styles {...props}>
       <div>{label}</div>
-      <img
-        className="close-modal"
-        src={closeIcon}
+      <div
+        className="close-modal-icon"
         onClick={() => props.close && props.close()}
-      />
+      >
+        &times;
+      </div>
     </Styles>
   );
 };
@@ -27,7 +28,10 @@ const Styles = styled.div`
   font-weight: 500;
   padding: 16px 15px 12px 20px;
   border-bottom: 1px solid #eaebed;
-  img {
+  .close-modal-icon {
     cursor: pointer;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 30px;
   }
 `;
