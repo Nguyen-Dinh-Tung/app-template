@@ -1,6 +1,8 @@
+import { UIButton } from "components/UI/Button";
 import { UISlider } from "components/UI/Slider";
 import { UIInput } from "components/UI/input/Input";
 import { UIModal } from "components/UI/modal";
+import { importExcelFile } from "libs/file";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -9,9 +11,6 @@ export const HomeScreen = (props: any) => {
   const [isOpen, setOpen] = useState(false);
   return (
     <Styles>
-      <UIModal isOpen={isOpen} close={() => setOpen(false)} label="Headerrrrr">
-        <div>AAAAAAAA</div>
-      </UIModal>
       <UISlider
         items={Array(50).fill("")}
         slidesToShow={10}
@@ -37,6 +36,31 @@ export const HomeScreen = (props: any) => {
           setNum(value);
         }}
       />
+      <input
+        type="file"
+        onChange={async (e: any) => {
+          const data = await importExcelFile(e.target.files[0]);
+
+          const en: any = {};
+          const vi: any = {};
+          data?.map((d: any) => {
+            en[d.en.toLowerCase()] = d.en;
+            vi[d.en.toLowerCase()] = d.vi || "";
+          });
+          console.log("fileeeee", en, vi);
+          e.target.value = "";
+        }}
+      />
+      <UIButton
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        Open Modal
+      </UIButton>
+      <UIModal isOpen={isOpen} close={() => setOpen(false)} label="Headerrrrr">
+        <div style={{ width: "600px", height: "1000px" }}>AAAAAAAA</div>
+      </UIModal>
     </Styles>
   );
 };

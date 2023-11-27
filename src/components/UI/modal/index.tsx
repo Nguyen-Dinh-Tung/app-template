@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ReactDOM from "react-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Header } from "./Header";
 const modalRoot: any = document.getElementById("modal-root");
 const htmlElement: any = document.querySelector("html");
@@ -30,7 +30,7 @@ export const UIModal = ({ label, isOpen, close, children, ...props }: any) => {
       }
     };
   }, [isOpen]);
-  if (!isOpen) return null;
+
   return ReactDOM.createPortal(
     <Styles
       {...props}
@@ -38,9 +38,13 @@ export const UIModal = ({ label, isOpen, close, children, ...props }: any) => {
         close();
         props.onClick && props.onClick();
       }}
+      isActive={isOpen}
     >
-      <div>
-        <div onClick={(e: any) => e.stopPropagation()}>
+      <div className="modal-cover">
+        <div
+          className="modal-content"
+          onClick={(e: any) => e.stopPropagation()}
+        >
           {label && <Header label={label} close={() => close()} />}
           {children}
         </div>
@@ -52,31 +56,44 @@ export const UIModal = ({ label, isOpen, close, children, ...props }: any) => {
 
 const Styles = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  inset: 0;
   overflow: auto;
   z-index: 99;
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.7s;
 
-  > div {
+  .modal-cover {
     min-height: 100%;
     min-width: 100%;
     padding: 50px 15px;
     display: flex;
-
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.7);
-    > div {
-      background: white;
-      min-width: 200px;
-      min-height: 200px;
-      border-radius: 4px;
+    transform: translateY(120%);
+    transition: 0.7s;
+  }
 
-      > div {
-        max-width: 100%;
-      }
+  .modal-content {
+    background: white;
+    min-width: 200px;
+    min-height: 200px;
+    border-radius: 4px;
+
+    > div {
+      max-width: 100%;
     }
   }
+
+  ${({ isActive }: any) =>
+    isActive &&
+    css`
+      pointer-events: unset;
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.7);
+
+      .modal-cover {
+        transform: translateY(0);
+      }
+    `}
 `;

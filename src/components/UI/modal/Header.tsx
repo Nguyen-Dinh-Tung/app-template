@@ -1,6 +1,4 @@
-import React from "react";
 import styled from "styled-components";
-import closeIcon from "assets/images/close.svg";
 
 interface Props {
   close?: () => void;
