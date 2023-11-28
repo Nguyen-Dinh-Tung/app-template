@@ -4,7 +4,7 @@ interface Props {
   close?: () => void;
 }
 
-export const Header = ({ label, ...props }: any) => {
+export const ModalHeader = ({ label, ...props }: any) => {
   return (
     <Styles {...props}>
       <div>{label}</div>

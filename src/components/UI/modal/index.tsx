@@ -1,10 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import styled, { css } from "styled-components";
-import { Header } from "./Header";
+import { ModalHeader } from "./Header";
+
 const modalRoot: any = document.getElementById("modal-root");
-const htmlElement: any = document.querySelector("html");
+const htmlElement: any = document.querySelector("body");
 let isHtmlScroll = true;
+
+// prevent html scroll when modal is open
+const handleScroll = (isOpen: boolean) => {
+  if (isOpen && isHtmlScroll) {
+    htmlElement.style.overflow = "hidden";
+    isHtmlScroll = false;
+  }
+  if (!isOpen && !isHtmlScroll) {
+    htmlElement.style.overflow = "auto";
+    isHtmlScroll = true;
+  }
+
+  return () => {
+    if (!isHtmlScroll) {
+      htmlElement.style.overflow = "auto";
+      isHtmlScroll = true;
+    }
+  };
+};
 
 interface Props {
   isOpen: boolean;
@@ -12,24 +32,19 @@ interface Props {
 }
 
 export const UIModal = ({ label, isOpen, close, children, ...props }: any) => {
-  useEffect(() => {
-    // prevent html scroll when modal is open
-    if (isOpen && isHtmlScroll) {
-      htmlElement.style.overflow = "hidden";
-      isHtmlScroll = false;
-    }
-    if (!isOpen && !isHtmlScroll) {
-      htmlElement.style.overflow = "auto";
-      isHtmlScroll = true;
-    }
+  const [isMounted, setMounted] = useState(false);
 
-    return () => {
-      if (!isHtmlScroll) {
-        htmlElement.style.overflow = "auto";
-        isHtmlScroll = true;
-      }
-    };
+  useEffect(() => {
+    handleScroll(isOpen);
+
+    if (isOpen && !isMounted) setMounted(true);
+    if (!isOpen && isMounted) {
+      setTimeout(() => {
+        setMounted(false);
+      }, 300);
+    }
   }, [isOpen]);
+  if (!isOpen && !isMounted) return null;
 
   return ReactDOM.createPortal(
     <Styles
@@ -38,14 +53,14 @@ export const UIModal = ({ label, isOpen, close, children, ...props }: any) => {
         close();
         props.onClick && props.onClick();
       }}
-      isActive={isOpen}
+      isActive={isOpen && isMounted}
     >
       <div className="modal-cover">
         <div
           className="modal-content"
           onClick={(e: any) => e.stopPropagation()}
         >
-          {label && <Header label={label} close={() => close()} />}
+          {label && <ModalHeader label={label} close={() => close()} />}
           {children}
         </div>
       </div>
@@ -59,8 +74,6 @@ const Styles = styled.div`
   inset: 0;
   overflow: auto;
   z-index: 99;
-  pointer-events: none;
-  opacity: 0;
   transition: 0.7s;
 
   .modal-cover {
@@ -70,8 +83,6 @@ const Styles = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateY(120%);
-    transition: 0.7s;
   }
 
   .modal-content {
@@ -79,6 +90,8 @@ const Styles = styled.div`
     min-width: 200px;
     min-height: 200px;
     border-radius: 4px;
+    transform: translateY(120%);
+    transition: 0.7s;
 
     > div {
       max-width: 100%;
@@ -88,11 +101,8 @@ const Styles = styled.div`
   ${({ isActive }: any) =>
     isActive &&
     css`
-      pointer-events: unset;
-      opacity: 1;
       background: rgba(0, 0, 0, 0.7);
-
-      .modal-cover {
+      .modal-content {
         transform: translateY(0);
       }
     `}
