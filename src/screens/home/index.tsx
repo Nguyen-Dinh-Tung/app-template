@@ -46,6 +46,7 @@ export const HomeScreen = (props: any) => {
           data?.map((d: any) => {
             en[d.en.toLowerCase()] = d.en;
             vi[d.en.toLowerCase()] = d.vi || "";
+            return "";
           });
           console.log("fileeeee", en, vi);
           e.target.value = "";
