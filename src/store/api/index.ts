@@ -2,7 +2,8 @@ import axios, { AxiosRequestConfig } from "axios";
 import { setLoading } from "components/layout/ApiLoading";
 import notify from "components/UI/notify";
 import store from "store/redux";
-import API from "./url";
+import { API } from "./url";
+export { API };
 
 const ACCESS_TOKEN = "ACCESS_TOKEN";
 
@@ -19,36 +20,21 @@ export const request = ({ method, url, data, ...rest }: AxiosRequestConfig) => {
     options = {
       ...options,
       headers: {
-        Authorization: `${token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
   }
   return axiosConfig(options);
 };
 
-export const createAxios = (
-  method: string,
-  url?: string,
-  data?: Record<string, any>,
-  config?: Record<string, any>
-) => {
-  return request({
-    method,
-    url,
-    params: method === "get" ? data : undefined,
-    data: method !== "get" ? data : undefined,
-    ...config,
-  });
-};
-
-const api = {
-  get: (...args: any[]): any => createAxios("get", ...args),
-  post: (...args: any[]): any => createAxios("post", ...args),
-  put: (...args: any[]): any => createAxios("put", ...args),
-  patch: (...args: any[]): any => createAxios("patch", ...args),
-  delete: (...args: any[]): any => createAxios("delete", ...args),
-  download: (url: string): any =>
-    createAxios("get", url, undefined, { responType: "blob" }),
+export const api = {
+  get: (url: string, params: any) => request({ method: "get", url, params }),
+  post: (url: string, data: any) => request({ method: "post", url, data }),
+  put: (url: string, data: any) => request({ method: "put", url, data }),
+  patch: (url: string, data: any) => request({ method: "patch", url, data }),
+  delete: (url: string, data: any) => request({ method: "delete", url, data }),
+  download: (url: string) =>
+    request({ method: "get", url, responseType: "blob" }),
 };
 
 //handle Request
@@ -88,5 +74,3 @@ export const configError = (err: any) => {
   if (typeof temp == "string") return temp;
   return temp[0];
 };
-
-export { api, API };
