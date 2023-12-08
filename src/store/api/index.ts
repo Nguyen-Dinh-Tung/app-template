@@ -7,11 +7,9 @@ export { API };
 
 const ACCESS_TOKEN = "ACCESS_TOKEN";
 
-const instanceAxios = {
+const axiosConfig = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URI,
-};
-
-const axiosConfig = axios.create(instanceAxios);
+});
 
 export const request = ({ method, url, data, ...rest }: AxiosRequestConfig) => {
   let token = localStorage.getItem(ACCESS_TOKEN);
