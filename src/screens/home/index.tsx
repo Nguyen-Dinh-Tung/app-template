@@ -57,10 +57,10 @@ export const HomeScreen = (props: any) => {
           setOpen(true);
         }}
       >
-        Open Modal
+        Open Modal1
       </UIButton>
       <UIModal isOpen={isOpen} close={() => setOpen(false)} label="Headerrrrr">
-        <div style={{ width: "600px", height: "1000px" }}>AAAAAAAA</div>
+        <div style={{ width: "600px", height: "100px" }}>AAAAAAAA</div>
       </UIModal>
     </Styles>
   );
