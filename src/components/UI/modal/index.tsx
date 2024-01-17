@@ -44,6 +44,7 @@ export const UIModal = ({ label, isOpen, close, children, ...props }: any) => {
       }, 300);
     }
   }, [isOpen]);
+
   if (!isOpen && !isMounted) return null;
 
   return ReactDOM.createPortal(

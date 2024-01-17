@@ -1,4 +1,6 @@
 import { UIButton } from "components/UI/Button";
+import { UIFade } from "components/UI/Fade";
+import { UIList } from "components/UI/List";
 import { UISlider } from "components/UI/Slider";
 import { UIInput } from "components/UI/input/Input";
 import { UIModal } from "components/UI/modal";
@@ -62,6 +64,24 @@ export const HomeScreen = (props: any) => {
       <UIModal isOpen={isOpen} close={() => setOpen(false)} label="Headerrrrr">
         <div style={{ width: "600px", height: "100px" }}>AAAAAAAA</div>
       </UIModal>
+      <UIList
+        items={Array(10).fill("")}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "wrap",
+          gap: "20px",
+          alignItems: "center",
+        }}
+      >
+        {(item: any, ind: number) => {
+          return (
+            <UIFade top>
+              <div className="slide-item">{ind}</div>
+            </UIFade>
+          );
+        }}
+      </UIList>
     </Styles>
   );
 };
@@ -72,8 +92,8 @@ const Styles = styled.div`
   flex-direction: column;
   gap: 20px;
   .slide-item {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     color: white;
     background: blue;
     font-size: 32px;
