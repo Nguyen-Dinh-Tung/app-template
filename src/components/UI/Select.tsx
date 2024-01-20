@@ -72,7 +72,7 @@ const Styles = styled.div`
       cursor: pointer;
       :hover {
         color: blue;
-        background: rgba(0, 0, 0, 0.1);
+        background: rgba(0, 0, 0, 0.05);
         border-radius: 2px;
       }
     }
