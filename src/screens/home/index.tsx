@@ -18,7 +18,7 @@ export const HomeScreen = (props: any) => {
       <UISelect
         options={Array(10)
           .fill("")
-          .map((_, index: number) => ({
+          .map((item, index: number) => ({
             label: "Label" + index,
             value: index,
           }))}

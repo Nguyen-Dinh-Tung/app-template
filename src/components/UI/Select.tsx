@@ -2,6 +2,17 @@ import { useClickOutSide } from "libs/useClickOutSide";
 import { useRef, useState } from "react";
 import styled from "styled-components";
 
+/* <UISelect
+  options={Array(10)
+    .fill("")
+    .map((item, index: number) => ({
+      label: "Label" + index,
+      value: index,
+    }))}
+  value={select}
+  onChange={(v: any) => setSelect(v)}
+/> */
+
 interface Props {
   options: { label: string; value: any }[];
   value: any;
