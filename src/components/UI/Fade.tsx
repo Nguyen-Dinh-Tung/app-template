@@ -17,7 +17,6 @@ export const UIFade = ({
   right,
   top,
   bottom,
-
   ...props
 }: Props) => {
   const [step, setStep] = useState(0);
@@ -27,10 +26,8 @@ export const UIFade = ({
     const observer = new IntersectionObserver(
       ([entry]: any) => {
         if (entry.isIntersecting) {
-          setStep(1);
+          setStep((prev) => (prev === 0 ? 1 : 2));
           setTimeout(() => setStep(2), 300);
-        } else {
-          setStep(0);
         }
       },
       { root: null, rootMargin: "0px", threshold: 0 }

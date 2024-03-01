@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { setLoading } from "components/layout/ApiLoading";
-import notify from "components/UI/notify";
+import { toast } from "components/UI/toast";
 import store from "store/redux";
 import { API } from "./url";
 export { API };
@@ -42,7 +42,7 @@ axiosConfig.interceptors.request.use(
     return config;
   },
   function (error) {
-    notify.error(configError(error));
+    toast.error(configError(error));
     setLoading(false);
     throw error;
   }
@@ -55,7 +55,7 @@ axiosConfig.interceptors.response.use(
     return response;
   },
   (error: any) => {
-    notify.error(configError(error));
+    toast.error(configError(error));
     setLoading(false);
     throw error;
   }

@@ -1,13 +1,13 @@
 import { ApiLoading } from "components/layout/ApiLoading";
-import { NotifyComponent } from "components/UI/notify";
 import AppProvider from "store";
 import ScreenRouter from "./screens";
+import { ToastComponent } from "components/UI/toast";
 
 export const App = () => {
   return (
     <AppProvider>
       <ScreenRouter />
-      <NotifyComponent />
+      <ToastComponent />
       <ApiLoading />
     </AppProvider>
   );

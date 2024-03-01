@@ -1,30 +1,31 @@
-import { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ReactComponent as SuccessIcon } from "./icon/success.svg";
+import { ReactComponent as CloseIcon } from "./icon/close.svg";
 import { ReactComponent as ErrorIcon } from "./icon/error.svg";
 import { ReactComponent as InfoIcon } from "./icon/info.svg";
+import { ReactComponent as SuccessIcon } from "./icon/success.svg";
 import { ReactComponent as WarningIcon } from "./icon/warning.svg";
-import { ReactComponent as CloseIcon } from "./icon/close.svg";
 
-const notifyTime = 2500; //ms
-let notifyFun: any = "";
+const toastTime = 2500; //ms
+let toastFun: any = () => {};
 
-const notify = {
-  success: (description: string) => notifyFun(description, "success"),
-  error: (description: string) => notifyFun(description, "error"),
-  info: (description: string) => notifyFun(description, "info"),
-  warning: (description: string) => notifyFun(description, "warning"),
+const toast = {
+  success: (description: string) => toastFun(description, "success"),
+  error: (description: string) => toastFun(description, "error"),
+  info: (description: string) => toastFun(description, "info"),
+  warning: (description: string) => toastFun(description, "warning"),
 };
 
-export default notify;
+Object.freeze(toast);
+export { toast };
 
-export const NotifyComponent = () => {
+export const ToastComponent = () => {
   const [isOpen, setOpen] = useState(false);
   const [type, setType] = useState("success");
   const [description, setDescription] = useState("");
   useEffect(() => {
     let t: any = "";
-    notifyFun = (
+    toastFun = (
       description: any,
       type?: "success" | "error" | "info" | "warning"
     ) => {
@@ -34,17 +35,17 @@ export const NotifyComponent = () => {
       if (t) clearTimeout(t);
       t = setTimeout(() => {
         setOpen(false);
-      }, notifyTime);
+      }, toastTime);
     };
   }, []);
-  const notifyInfo = notifyOptions[type] || {};
+  const toastInfo = toastOptions[type] || {};
   return (
     <Styles
       className={isOpen ? "active" : ""}
-      style={{ background: notifyInfo.color }}
+      style={{ background: toastInfo.color }}
       onClick={() => !isOpen && setOpen(true)}
     >
-      <div className="alert-icon">{notifyInfo.icon}</div>
+      <div className="alert-icon">{toastInfo.icon}</div>
       <div className="alert-content">
         {/* <div className="alert-title">{alertInfo.title}</div> */}
         <div className="alert-description">{description}</div>
@@ -54,7 +55,7 @@ export const NotifyComponent = () => {
   );
 };
 
-const notifyOptions: any = {
+const toastOptions: any = {
   success: {
     icon: <SuccessIcon />,
     title: "Success",
@@ -82,7 +83,7 @@ const Styles = styled.div`
     transform: translateX(0);
     :after {
       right: 100%;
-      transition: linear ${notifyTime}ms;
+      transition: linear ${toastTime}ms;
     }
   }
   :after {

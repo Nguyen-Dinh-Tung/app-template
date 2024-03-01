@@ -1,21 +1,6 @@
-import React from "react";
 import styled from "styled-components";
-import { ReactComponent as LeftArrow } from "assets/svg/left-arrow.svg";
 
 const pageGroup = 3;
-
-const getPageArr2 = (currentPage: number, totalPage: number) => {
-  const start = Math.floor((currentPage - 1) / pageGroup) * pageGroup;
-  let result: any = Array(pageGroup)
-    .fill("")
-    .map((p: any, ind: number) => {
-      const temp = start + ind + 1;
-      if (temp > totalPage) return null;
-      else return temp;
-    })
-    .filter((p: any) => p);
-  return result;
-};
 
 const getPageArr = (currentPage: number, totalPage: number) => {
   const result: any = [
@@ -34,15 +19,10 @@ interface Props {
   page: number;
   pageSize: number;
   totalCount: number;
-  onClickPage: (page: number) => void;
+  onChange: (page: number) => void;
 }
 
-export const Pagination = ({
-  page,
-  pageSize,
-  totalCount,
-  onClickPage,
-}: Props) => {
+export const Pagination = ({ page, pageSize, totalCount, onChange }: Props) => {
   const totalPage = Math.ceil(totalCount / pageSize);
   if (totalPage <= 1) return null;
 
@@ -57,17 +37,17 @@ export const Pagination = ({
           className="left-arrow"
           style={{ opacity: page > 1 ? "1" : "0.3" }}
           onClick={() => {
-            if (page > 1) onClickPage(page - 1);
+            if (page > 1) onChange(page - 1);
           }}
         >
-          <LeftArrow />
+          {"<"}
         </div>
       )}
 
       {start > 1 && (
         <div
           onClick={() => {
-            onClickPage(1);
+            onChange(1);
           }}
         >
           1
@@ -77,7 +57,7 @@ export const Pagination = ({
         <div
           onClick={() => {
             const temp = page - 3 > 1 ? page - 3 : 1;
-            onClickPage(temp);
+            onChange(temp);
           }}
         >
           ...
@@ -89,7 +69,7 @@ export const Pagination = ({
           className={num == page ? "selected" : ""}
           key={ind + 100}
           onClick={() => {
-            onClickPage(num);
+            onChange(num);
           }}
         >
           {num}
@@ -100,7 +80,7 @@ export const Pagination = ({
         <div
           onClick={() => {
             const temp = page + 3 < totalPage ? page + 3 : totalPage;
-            onClickPage(temp);
+            onChange(temp);
           }}
         >
           ...
@@ -109,7 +89,7 @@ export const Pagination = ({
       {last < totalPage && (
         <div
           onClick={() => {
-            onClickPage(totalPage);
+            onChange(totalPage);
           }}
         >
           {totalPage}
@@ -121,10 +101,10 @@ export const Pagination = ({
           className="right-arrow"
           style={{ opacity: page < totalPage ? "1" : "0.3" }}
           onClick={() => {
-            if (page < totalPage) onClickPage(page + 1);
+            if (page < totalPage) onChange(page + 1);
           }}
         >
-          <LeftArrow />
+          {">"}
         </div>
       )}
     </Styles>
@@ -149,10 +129,6 @@ const Styles = styled.div`
     line-height: 21px;
     color: #7f8c9b;
     cursor: pointer;
-  }
-
-  .right-arrow {
-    transform: rotate(180deg);
   }
 
   .selected {

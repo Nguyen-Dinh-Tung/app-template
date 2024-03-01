@@ -8,6 +8,8 @@ import { UIModal } from "components/UI/modal";
 import { importExcelFile } from "libs/file";
 import { useState } from "react";
 import styled from "styled-components";
+import { toast } from "components/UI/toast";
+import { Pagination } from "components/UI/Pagination";
 
 export const HomeScreen = (props: any) => {
   const [num, setNum] = useState("");
@@ -66,9 +68,11 @@ export const HomeScreen = (props: any) => {
           e.target.value = "";
         }}
       />
+      <Pagination page={1} pageSize={10} totalCount={45} onChange={() => {}} />
       <UIButton
         onClick={() => {
-          setOpen(true);
+          // setOpen(true);
+          toast.warning("AAAAAAAAAAAAAAA");
         }}
       >
         Open Modal1
@@ -77,7 +81,7 @@ export const HomeScreen = (props: any) => {
         <div style={{ width: "600px", height: "100px" }}>AAAAAAAA</div>
       </UIModal>
       <UIList
-        items={Array(10).fill("")}
+        items={Array(1).fill("")}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -88,7 +92,7 @@ export const HomeScreen = (props: any) => {
       >
         {(item: any, ind: number) => {
           return (
-            <UIFade top>
+            <UIFade right>
               <div className="slide-item">{ind}</div>
             </UIFade>
           );
