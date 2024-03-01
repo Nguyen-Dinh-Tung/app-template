@@ -1,9 +1,8 @@
-import React from "react";
-import { ThemeProvider } from "styled-components";
-import { GlobalStyle, theme } from "libs/GlobalStyles";
-import store from "./redux";
-import { Provider } from "react-redux";
 import "antd/dist/antd.min.css";
+import { GlobalStyle, theme } from "libs/GlobalStyles";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import { store } from "./redux";
 
 export const AppProvider = ({ children }: any) => {
   return (
