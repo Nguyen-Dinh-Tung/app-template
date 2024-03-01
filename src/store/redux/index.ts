@@ -1,24 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 
-// type StoreType =
-//   | "user"
-//   | "conference"
-//   | "topic"
-//   | "conferenceTime"
-//   | "authorityForMe"
-//   | "votedTopics";
-
-interface StoreValues {
-  user: any;
-  conference: any;
-  topic: any;
-  conferenceTime: any;
-  authorityForMe: any;
-  votedTopics: any;
-}
-type StoreType = keyof StoreValues;
-
-const defaultValues: StoreValues = {
+const defaultValues = {
   user: null,
   conference: {},
   topic: {},
@@ -26,6 +9,8 @@ const defaultValues: StoreValues = {
   authorityForMe: [],
   votedTopics: [],
 };
+
+type StoreType = keyof typeof defaultValues;
 
 function reducer(state = defaultValues, { type, payload }: any) {
   return { ...state, [type]: payload };
@@ -48,12 +33,19 @@ function reducer(state = defaultValues, { type, payload }: any) {
   // }
 }
 
-const store = configureStore({ reducer });
-
-export default store;
+export const store = configureStore({ reducer });
 
 export const updateStore = (type: StoreType, payload: any) => {
   store.dispatch({ type, payload });
+};
+
+export const selectStore = (type: StoreType) => {
+  return store.getState()[type];
+};
+
+export const useAppSelector = (type: StoreType) => {
+  const data = useSelector((state: any) => state[type]);
+  return data;
 };
 
 // const counterSlice = createSlice({
