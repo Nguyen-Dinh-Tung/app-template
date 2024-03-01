@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { setLoading } from "components/layout/ApiLoading";
 import { toast } from "components/UI/toast";
-import store from "store/redux";
+import { store } from "store/redux";
 import { API } from "./url";
 export { API };
 
