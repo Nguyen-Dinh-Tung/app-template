@@ -84,6 +84,9 @@ const Styles = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: 0.7s;
   }
 
   .modal-content {
@@ -91,8 +94,6 @@ const Styles = styled.div`
     min-width: 200px;
     min-height: 200px;
     border-radius: 4px;
-    transform: translateY(120%);
-    transition: 0.7s;
 
     > div {
       max-width: 100%;
@@ -103,8 +104,9 @@ const Styles = styled.div`
     isActive &&
     css`
       background: rgba(0, 0, 0, 0.7);
-      .modal-content {
+      .modal-cover {
         transform: translateY(0);
+        opacity: 1;
       }
     `}
 `;

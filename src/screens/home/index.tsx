@@ -71,8 +71,7 @@ export const HomeScreen = (props: any) => {
       <Pagination page={1} pageSize={10} totalCount={45} onChange={() => {}} />
       <UIButton
         onClick={() => {
-          // setOpen(true);
-          toast.warning("AAAAAAAAAAAAAAA");
+          setOpen(true);
         }}
       >
         Open Modal1
