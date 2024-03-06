@@ -6,7 +6,7 @@ import { ReactComponent as InfoIcon } from "./icon/info.svg";
 import { ReactComponent as SuccessIcon } from "./icon/success.svg";
 import { ReactComponent as WarningIcon } from "./icon/warning.svg";
 
-const toastTime = 2500; //ms
+const toastTime = 3000; //ms
 let toastFun: any = () => {};
 
 const toast = {
@@ -23,6 +23,7 @@ export const ToastComponent = () => {
   const [isOpen, setOpen] = useState(false);
   const [type, setType] = useState("success");
   const [description, setDescription] = useState("");
+
   useEffect(() => {
     let t: any = "";
     toastFun = (
@@ -38,6 +39,7 @@ export const ToastComponent = () => {
       }, toastTime);
     };
   }, []);
+
   const toastInfo = toastOptions[type] || {};
   return (
     <Styles

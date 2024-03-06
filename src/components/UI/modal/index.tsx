@@ -92,7 +92,7 @@ const Styles = styled.div`
   .modal-content {
     background: white;
     min-width: 200px;
-    min-height: 200px;
+    min-height: 150px;
     border-radius: 4px;
 
     > div {

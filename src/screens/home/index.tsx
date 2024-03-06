@@ -1,3 +1,5 @@
+import { UIButton } from "components/UI/Button";
+import { confirmIt } from "components/UI/confirm";
 import { UIDatePicker } from "components/UI/date-picker";
 import { UIInput } from "components/UI/input/Input";
 import { useState } from "react";
@@ -10,6 +12,17 @@ export const HomeScreen = (props: any) => {
   const [date, setDate] = useState();
   return (
     <Styles>
+      <UIButton
+        onClick={async () => {
+          const res = await confirmIt(
+            "Warning",
+            "Are you sure to delete this member?"
+          );
+          console.log("ressssss", res);
+        }}
+      >
+        Confirm
+      </UIButton>
       <UIInput
         isFormatNumber
         value={num}
@@ -23,7 +36,6 @@ export const HomeScreen = (props: any) => {
         value={date}
         isTime
         onChange={(d: any) => {
-          console.log("onChangeeee", d);
           setDate(d);
         }}
       />
