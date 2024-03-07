@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 // import { NumericFormat } from "react-number-format";
 
@@ -14,65 +14,87 @@ import { useEffect, useRef, useState } from "react";
 //   );
 // };
 
-const numberRegex = /^([-]{0,1})([0-9]{0,})([.]{0,1})([0-9]{0,})$/;
-const isNumber = (value: string) => numberRegex.test(value);
-
-const stringToNumber = (value: string) => {
-  return value.replaceAll(".", "").replaceAll(",", ".");
+const stringToNumber = (
+  value: string,
+  thousandSeparator: string,
+  decimalSeparator: string,
+  decimalScale: number
+) => {
+  const temp = Number(
+    value.replaceAll(thousandSeparator, "").replaceAll(decimalSeparator, ".")
+  );
+  return Math.floor(temp * 10 ** decimalScale) / 10 ** decimalScale;
 };
 
-const numberToString = (value: string, decimalScale: number) => {
-  const temp = value.split(",");
-  let result = "";
-  if (temp[0])
-    result = Number(temp[0].replaceAll(".", "")).toLocaleString("de-DE");
-  if (temp[1] !== undefined) {
-    let decimalPart = temp[1].replaceAll(".", "");
-    if (decimalScale) {
-      decimalPart = decimalPart.slice(0, decimalScale);
-    }
-    result = `${result},${decimalPart}`;
-  }
-  return result;
+const formatNumber = (num: any, decimalScale: number) => {
+  return Number(num || 0).toLocaleString("de-DE", {
+    maximumFractionDigits: decimalScale,
+  });
 };
+
+const getAllowCharacters = (decimalSeparator: string) => [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "0",
+  "Backspace",
+  decimalSeparator,
+];
 
 export const NumberFormat = ({
   value,
-  defaultValue,
-  decimalScale,
+  decimalScale = 2,
+  thousandSeparator = ".",
+  decimalSeparator = ",",
+  allowNegative = false,
+  onChange,
   ...props
 }: any) => {
   const ref = useRef();
-  // useEffect(()=>{
-  //   handleChange(defaultValue)
-  // },[defaultValue])
-  const handleChange = (e: any) => {
-    const inputValue = e.target.value;
-    const temp = stringToNumber(inputValue);
 
-    if (isNumber(temp)) {
-      props.onChange && props.onChange(temp);
-      e.target.value = numberToString(inputValue, decimalScale);
-    } else {
-      const caret = e.target.selectionStart;
-      e.target.value =
-        inputValue.slice(0, caret - 1) +
-        inputValue.slice(caret, inputValue.length);
+  const allowCharacters = getAllowCharacters(decimalSeparator);
 
-      e.target.setSelectionRange(caret, caret - 1);
-    }
+  const hanleChange = (e: any) => {
+    const floatValue = stringToNumber(
+      e.target.value,
+      thousandSeparator,
+      decimalSeparator,
+      decimalScale
+    );
+
+    const formattedValue = floatValue
+      ? formatNumber(floatValue, decimalScale)
+      : "";
+    if (e.target.value.slice(-1) !== decimalSeparator)
+      e.target.value = formattedValue;
+
+    onChange(floatValue);
   };
+
   return (
     <input
       {...props}
       ref={ref}
-      onChange={handleChange}
-      onPaste={(e: any) => {
-        setTimeout(() => {
-          const temp = stringToNumber(e.target.value);
-          if (!isNumber(temp)) e.target.value = "";
-        }, 0);
+      onKeyDown={(e: any) => {
+        if (!allowCharacters.includes(e.key)) {
+          e.preventDefault();
+        }
+
+        if (
+          e.key == decimalSeparator &&
+          e.target.value.includes(decimalSeparator)
+        ) {
+          e.preventDefault();
+        }
       }}
+      onChange={hanleChange}
     />
   );
 };

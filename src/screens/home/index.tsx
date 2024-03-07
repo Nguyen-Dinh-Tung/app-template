@@ -27,16 +27,8 @@ export const HomeScreen = (props: any) => {
         isFormatNumber
         value={num}
         onChange={(value: any) => {
+          console.log("valueeeeee", value);
           setNum(value);
-        }}
-      />
-      <UIDatePicker
-        label="Start Date"
-        format="MMM DD YYYY hh:mm A"
-        value={date}
-        isTime
-        onChange={(d: any) => {
-          setDate(d);
         }}
       />
     </Styles>
