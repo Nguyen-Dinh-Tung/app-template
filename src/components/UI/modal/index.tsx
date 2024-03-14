@@ -27,11 +27,20 @@ const handleScroll = (isOpen: boolean) => {
 };
 
 interface Props {
+  label?: string;
   isOpen: boolean;
+  children: any;
   close: () => void;
+  [x: string]: any;
 }
 
-export const UIModal = ({ label, isOpen, close, children, ...props }: any) => {
+export const UIModal = ({
+  label,
+  isOpen,
+  close,
+  children,
+  ...props
+}: Props) => {
   const [isMounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -70,7 +79,7 @@ export const UIModal = ({ label, isOpen, close, children, ...props }: any) => {
   );
 };
 
-const Styles = styled.div`
+const Styles = styled.div<any>`
   position: fixed;
   inset: 0;
   overflow: auto;
