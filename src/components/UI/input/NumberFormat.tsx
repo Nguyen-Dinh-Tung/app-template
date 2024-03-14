@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 // import { NumericFormat } from "react-number-format";
 
@@ -26,13 +26,17 @@ const stringToNumber = (
   return Math.floor(temp * 10 ** decimalScale) / 10 ** decimalScale;
 };
 
-const formatNumber = (num: any, decimalScale: number) => {
-  return Number(num || 0).toLocaleString("de-DE", {
+const formatNumber = (
+  num: any,
+  decimalScale: number = 2,
+  language: string = "en"
+) => {
+  return Number(num || 0).toLocaleString(language == "en" ? "en-EN" : "de-DE", {
     maximumFractionDigits: decimalScale,
   });
 };
 
-const getAllowCharacters = (decimalSeparator: string) => [
+const characters = [
   "0",
   "1",
   "2",
@@ -45,21 +49,41 @@ const getAllowCharacters = (decimalSeparator: string) => [
   "9",
   "0",
   "Backspace",
-  decimalSeparator,
 ];
 
+interface Props {
+  defaultValue: string;
+  decimalScale: number;
+  language?: "en" | "vi";
+  onChange: (v: number) => void;
+  [x: string]: any;
+}
+
+{
+  /* <NumberFormat
+  defaultValue={"123456789"}
+  onChange={(value: any) => {
+    setNum(value);
+  }}
+/>; */
+}
+
 export const NumberFormat = ({
-  value,
+  defaultValue,
   decimalScale = 2,
-  thousandSeparator = ".",
-  decimalSeparator = ",",
-  allowNegative = false,
+  language = "en",
   onChange,
   ...props
-}: any) => {
-  const ref = useRef();
+}: Props) => {
+  const ref: any = useRef();
 
-  const allowCharacters = getAllowCharacters(decimalSeparator);
+  useEffect(() => {
+    ref.current.value = formatNumber(defaultValue, decimalScale, language);
+  }, [defaultValue, decimalScale, language]);
+
+  const decimalSeparator = language == "en" ? "." : ",";
+  const thousandSeparator = language == "en" ? "," : ".";
+  const allowCharacters = characters.concat([decimalSeparator]);
 
   const hanleChange = (e: any) => {
     const floatValue = stringToNumber(
@@ -69,8 +93,8 @@ export const NumberFormat = ({
       decimalScale
     );
 
-    const formattedValue = floatValue
-      ? formatNumber(floatValue, decimalScale)
+    const formattedValue = e.target.value
+      ? formatNumber(floatValue, decimalScale, language)
       : "";
     if (e.target.value.slice(-1) !== decimalSeparator)
       e.target.value = formattedValue;

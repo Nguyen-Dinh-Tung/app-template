@@ -23,9 +23,11 @@ export const HomeScreen = (props: any) => {
       >
         Confirm
       </UIButton>
+      <UIInput />
       <UIInput
         isFormatNumber
-        value={num}
+        defaultValue={123456789.877}
+        language="vi"
         onChange={(value: any) => {
           console.log("valueeeeee", value);
           setNum(value);
