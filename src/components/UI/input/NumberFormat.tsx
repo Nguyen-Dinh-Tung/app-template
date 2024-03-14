@@ -59,14 +59,12 @@ interface Props {
   [x: string]: any;
 }
 
-{
-  /* <NumberFormat
+/* <NumberFormat
   defaultValue={"123456789"}
   onChange={(value: any) => {
     setNum(value);
   }}
 />; */
-}
 
 export const NumberFormat = ({
   defaultValue,
